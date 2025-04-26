@@ -1,0 +1,351 @@
+<!doctype html>
+<html class="no-js " lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="SmartLabo IoT Dashboard">
+<link rel="icon" type="image/png" href="assets/images/logo2.png">
+<title>SmartLabo Dashboard</title>
+<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/plugins/morrisjs/morris.css">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/color_skins.css">
+<style>
+    
+    #qrcode {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .status {
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #logs {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      background-color: #f9f9f9;
+      font-family: monospace;
+    }
+    .log-item {
+      margin-bottom: 5px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body class="theme-orange">
+<section class="content">
+  <div class="container-fluid">
+    <div class="row clearfix">
+      <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Grafik Arus Channel</h2>
+          </div>
+          <div class="body">
+            <canvas id="currentChart" height="160"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Kontrol Relay 4 Channel</h2>
+          </div>
+          <div class="body">
+            <div class="form-group">
+              <button id="relay-btn-1" class="btn btn-block" onclick="toggleRelay(1)">Relay 1</button>
+              <button id="relay-btn-2" class="btn btn-block" onclick="toggleRelay(2)">Relay 2</button>
+              <button id="relay-btn-3" class="btn btn-block" onclick="toggleRelay(3)">Relay 3</button>
+              <button id="relay-btn-4" class="btn btn-block" onclick="toggleRelay(4)">Relay 4</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>QR Code Scanner</h2>
+          </div>
+          <div class="body text-center">
+            <div class="container">
+                <h1>WhatsApp Web.js Interface</h1>
+                
+                <div class="status" id="status">Status: Waiting for QR Code...</div>
+                
+                <div class="qr-container">
+                  <h2>Scan QR Code</h2>
+                  <div id="qrcode">
+                    <p>Loading QR Code...</p>
+                  </div>
+                </div>
+            
+                <div class="send-message">
+                  <h2>Send Message</h2>
+                  <div class="form-group">
+                    <label for="number">Phone Number (with country code, e.g., 6285602924733):</label>
+                    <input type="text" id="number" value="6285602924733" placeholder="e.g., 6285602924733">
+                  </div>
+                  <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" rows="4" placeholder="Type your message here...">Halo! Ini adalah pesan dari WhatsApp Web Interface.</textarea>
+                  </div>
+                  <button id="sendBtn">Send Message</button>
+                </div>
+                
+                <div class="logs">
+                  <h2>Logs</h2>
+                  <div id="logs"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+
+<script>
+  const socket = io();
+
+  fetch('/api/relay/status')
+    .then(res => res.json())
+    .then(relays => {
+      relays.forEach(relay => {
+        const btn = document.getElementById(`relay-btn-${relay.relay_id}`);
+        if (!btn) return;
+
+        if (relay.state) {
+          btn.classList.add('btn-success');
+          btn.classList.remove('btn-danger');
+          btn.textContent = `Relay ${relay.relay_id} (ON)`;
+        } else {
+          btn.classList.add('btn-danger');
+          btn.classList.remove('btn-success');
+          btn.textContent = `Relay ${relay.relay_id} (OFF)`;
+        }
+      });
+    })
+    .catch(err => console.error('Gagal mengambil status relay:', err));
+  const ctx = document.getElementById('currentChart').getContext('2d');
+  const currentChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        { label: 'Channel 1', data: [], borderColor: '#42A5F5', fill: false },
+        { label: 'Channel 2', data: [], borderColor: '#66BB6A', fill: false },
+        { label: 'Channel 3', data: [], borderColor: '#FFA726', fill: false },
+        { label: 'Channel 4', data: [], borderColor: '#AB47BC', fill: false }
+      ]
+    },
+    options: {
+      responsive: true,
+      animation: false,
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Ampere' } },
+        x: { title: { display: true, text: 'Waktu' } }
+      }
+    }
+  });
+  
+
+  function toggleRelay(channel) {
+    fetch(`/api/relay/${channel}/toggle`, { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        const btn = document.getElementById(`relay-btn-${channel}`);
+        if (data.status === 'ON') {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-success');
+          btn.textContent = `Relay ${channel} (ON)`;
+        } else {
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-danger');
+          btn.textContent = `Relay ${channel} (OFF)`;
+        }
+      })
+      .catch(error => alert(`Error: ${error.message}`));
+  }
+
+</script>
+<script>
+
+  socket.on('sensorData', (data) => {
+    const waktu = new Date().toLocaleTimeString();
+    currentChart.data.labels.push(waktu);
+    currentChart.data.datasets[0].data.push(data.arus1);
+    currentChart.data.datasets[1].data.push(data.arus2);
+    currentChart.data.datasets[2].data.push(data.arus3);
+    currentChart.data.datasets[3].data.push(data.arus4);
+    if (currentChart.data.labels.length > 10) {
+      currentChart.data.labels.shift();
+      currentChart.data.datasets.forEach(ds => ds.data.shift());
+    }
+    currentChart.update();
+  });
+</script>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script>
+  const video = document.getElementById('qr-video');
+  const qrScanner = new Html5Qrcode("qr-video");
+  Html5Qrcode.getCameras().then(devices => {
+    if (devices && devices.length) {
+      qrScanner.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        qrCodeMessage => {
+          document.getElementById('scan-result').innerText = `Hasil: ${qrCodeMessage}`;
+        },
+        errorMessage => {
+          console.warn(`QR Error: ${errorMessage}`);
+        }
+      );
+    }
+  });
+</script>
+</body>
+</html>
+
+  <script>
+    
+    
+    // DOM elements
+    const qrcodeElement = document.getElementById('qrcode');
+    const statusElement = document.getElementById('status');
+    const numberInput = document.getElementById('number');
+    const messageInput = document.getElementById('message');
+    const sendBtn = document.getElementById('sendBtn');
+    const onOffBtn = document.getElementById('onOffBtn');
+    const logsElement = document.getElementById('logs');
+    
+    // Log function
+    function addLog(message) {
+      const logItem = document.createElement('div');
+      logItem.className = 'log-item';
+      logItem.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logsElement.appendChild(logItem);
+      logsElement.scrollTop = logsElement.scrollHeight;
+    }
+    
+    // Socket events
+    socket.on('qr', (src) => {
+      qrcodeElement.innerHTML = `<img src="${src}" alt="QR Code">`;
+      statusElement.textContent = 'Status: QR Code received, please scan!';
+      addLog('QR Code received, please scan with WhatsApp on your phone');
+    });
+    
+    socket.on('ready', (message) => {
+      qrcodeElement.innerHTML = '<p>Connected!</p>';
+      statusElement.textContent = 'Status: ' + message;
+      addLog(message);
+    });
+    
+    socket.on('authenticated', (message) => {
+      statusElement.textContent = 'Status: ' + message;
+      addLog(message);
+    });
+    
+    socket.on('auth_failure', (message) => {
+      statusElement.textContent = 'Status: Authentication failed';
+      addLog(message);
+    });
+    
+    socket.on('disconnected', (message) => {
+      statusElement.textContent = 'Status: Disconnected';
+      addLog(message);
+    });
+    
+    socket.on('message', (message) => {
+      addLog(message);
+    });
+    
+    socket.on('messageSent', (data) => {
+      if (data.status === 'success') {
+        addLog('Message sent successfully');
+      } else {
+        addLog(`Error: ${data.message}`);
+      }
+    });
+
+    socket.on('sensorData', (data) => {
+      const waktu = new Date().toLocaleTimeString();
+
+      currentChart.data.labels.push(waktu);
+      currentChart.data.datasets[0].data.push(data.arus1);
+      currentChart.data.datasets[1].data.push(data.arus2);
+      currentChart.data.datasets[2].data.push(data.arus3);
+      currentChart.data.datasets[3].data.push(data.arus4);
+
+      // Batasi jumlah data (misal 10 titik)
+      if (currentChart.data.labels.length > 10) {
+        currentChart.data.labels.shift();
+        currentChart.data.datasets.forEach(ds => ds.data.shift());
+      }
+
+      currentChart.update();
+    });
+
+    
+    // Send message function
+    sendBtn.addEventListener('click', () => {
+      const number = numberInput.value.trim();
+      const message = messageInput.value.trim();
+      
+      if (!number || !message) {
+        addLog('Please enter both number and message');
+        return;
+      }
+      
+      addLog(`Sending message to ${number}...`);
+      socket.emit('sendMessage', { number, message });
+    });
+    
+    // Send message on off function
+    onOffBtn.addEventListener('click', () => {
+      addLog('Sending message on off...');
+      socket.emit('onOff');
+    });
+    // Check status on load
+    socket.emit('checkStatus');
+    
+    // Initial log
+    addLog('Interface loaded, waiting for WhatsApp connection...');
+  </script>

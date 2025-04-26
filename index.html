@@ -1,0 +1,189 @@
+<!-- File: public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Web.js Interface</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .qr-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #qrcode {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .status {
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #logs {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      background-color: #f9f9f9;
+      font-family: monospace;
+    }
+    .log-item {
+      margin-bottom: 5px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WhatsApp Web.js Interface</h1>
+    
+    <div class="status" id="status">Status: Waiting for QR Code...</div>
+    
+    <div class="qr-container">
+      <h2>Scan QR Code</h2>
+      <div id="qrcode">
+        <p>Loading QR Code...</p>
+      </div>
+    </div>
+
+    <div class="send-message">
+      <h2>Send Message</h2>
+      <div class="form-group">
+        <label for="number">Phone Number (with country code, e.g., 6285602924733):</label>
+        <input type="text" id="number" value="6285602924733" placeholder="e.g., 6285602924733">
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" rows="4" placeholder="Type your message here...">Halo! Ini adalah pesan dari WhatsApp Web Interface.</textarea>
+      </div>
+      <button id="sendBtn">Send Message</button>
+    </div>
+    
+    <div class="logs">
+      <h2>Logs</h2>
+      <div id="logs"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    
+    // DOM elements
+    const qrcodeElement = document.getElementById('qrcode');
+    const statusElement = document.getElementById('status');
+    const numberInput = document.getElementById('number');
+    const messageInput = document.getElementById('message');
+    const sendBtn = document.getElementById('sendBtn');
+    const logsElement = document.getElementById('logs');
+    
+    // Log function
+    function addLog(message) {
+      const logItem = document.createElement('div');
+      logItem.className = 'log-item';
+      logItem.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logsElement.appendChild(logItem);
+      logsElement.scrollTop = logsElement.scrollHeight;
+    }
+    
+    // Socket events
+    socket.on('qr', (src) => {
+      qrcodeElement.innerHTML = `<img src="${src}" alt="QR Code">`;
+      statusElement.textContent = 'Status: QR Code received, please scan!';
+      addLog('QR Code received, please scan with WhatsApp on your phone');
+    });
+    
+    socket.on('ready', (message) => {
+      qrcodeElement.innerHTML = '<p>Connected!</p>';
+      statusElement.textContent = 'Status: ' + message;
+      addLog(message);
+    });
+    
+    socket.on('authenticated', (message) => {
+      statusElement.textContent = 'Status: ' + message;
+      addLog(message);
+    });
+    
+    socket.on('auth_failure', (message) => {
+      statusElement.textContent = 'Status: Authentication failed';
+      addLog(message);
+    });
+    
+    socket.on('disconnected', (message) => {
+      statusElement.textContent = 'Status: Disconnected';
+      addLog(message);
+    });
+    
+    socket.on('message', (message) => {
+      addLog(message);
+    });
+    
+    socket.on('messageSent', (data) => {
+      if (data.status === 'success') {
+        addLog('Message sent successfully');
+      } else {
+        addLog(`Error: ${data.message}`);
+      }
+    });
+    
+    // Send message function
+    sendBtn.addEventListener('click', () => {
+      const number = numberInput.value.trim();
+      const message = messageInput.value.trim();
+      
+      if (!number || !message) {
+        addLog('Please enter both number and message');
+        return;
+      }
+      
+      addLog(`Sending message to ${number}...`);
+      socket.emit('sendMessage', { number, message });
+    });
+    
+    // Check status on load
+    socket.emit('checkStatus');
+    
+    // Initial log
+    addLog('Interface loaded, waiting for WhatsApp connection...');
+  </script>
+</body>
+</html>

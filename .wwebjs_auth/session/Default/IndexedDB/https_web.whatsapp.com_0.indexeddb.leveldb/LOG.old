@@ -1,0 +1,12 @@
+2025/04/24-20:29:08.141 8303 Reusing MANIFEST /Users/ekopurwanto/Documents/Aplikasi/Latihan Project/iot/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/24-20:29:08.141 8303 Recovering log #297
+2025/04/24-20:29:08.165 8303 Reusing old log /Users/ekopurwanto/Documents/Aplikasi/Latihan Project/iot/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000297.log 
+2025/04/24-20:29:09.798 b103 Level-0 table #303: started
+2025/04/24-20:29:09.807 b103 Level-0 table #303: 446219 bytes OK
+2025/04/24-20:29:09.818 b103 Delete type=0 #297
+2025/04/24-20:29:09.818 b103 Manual compaction at level-0 from '\x00U\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00V\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/04/24-20:29:10.817 15f03 Compacting 1@1 + 2@2 files
+2025/04/24-20:29:10.855 15f03 Generated table #304@1: 56353 keys, 2216404 bytes
+2025/04/24-20:29:10.873 15f03 Generated table #305@1: 21208 keys, 969930 bytes
+2025/04/24-20:29:10.873 15f03 Compacted 1@1 + 2@2 files => 3186334 bytes
+2025/04/24-20:29:10.895 15f03 compacted to: files[ 0 0 2 0 0 0 0 ]
