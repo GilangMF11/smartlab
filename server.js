@@ -29,6 +29,9 @@ let whatsappReady = false;
 let reconnectAttempts = 0;
 const maxReconnectAttempts = 5;
 
+// Message queue for failed messages
+const messageQueue = [];
+
 // Session configuration
 app.use(session({
   secret: 'smartlabo-anto-43212',
@@ -104,10 +107,14 @@ function createWhatsAppClient() {
     reconnectAttempts = 0;
     io.emit('ready', 'WhatsApp is ready!');
     io.emit('message', 'WhatsApp is ready!');
+    
+    // Process any queued messages
+    setTimeout(processMessageQueue, 2000);
   });
 
   client.on('authenticated', () => {
     console.log('🔐 WhatsApp authenticated');
+    whatsappReady = true; // Set ready state on authentication too
     io.emit('authenticated', 'Authenticated!');
     io.emit('message', 'Authenticated!');
   });
@@ -156,58 +163,94 @@ function handleReconnection() {
   }
 }
 
-// Enhanced WhatsApp message sending with error handling
+// Enhanced WhatsApp message sending with better status checking
 const sendWhatsAppMessage = async (number, message) => {
   try {
-    // Check if client is ready
-    if (!whatsappClient || !whatsappReady) {
-      console.log('⚠️ WhatsApp client not ready. Message queued.');
+    // Check if client exists
+    if (!whatsappClient) {
+      console.log('⚠️ WhatsApp client not initialized. Message queued.');
       return { 
         success: false, 
-        error: 'WhatsApp client not ready',
+        error: 'WhatsApp client not initialized',
         shouldRetry: true
       };
     }
 
-    // Check client state
-    const state = await whatsappClient.getState();
-    if (state !== 'CONNECTED') {
-      console.log(`⚠️ WhatsApp state: ${state}. Cannot send message.`);
+    // Check client state more accurately
+    let clientState = null;
+    try {
+      clientState = await whatsappClient.getState();
+      console.log(`📊 WhatsApp current state: ${clientState}`);
+    } catch (stateError) {
+      console.log('⚠️ Cannot get WhatsApp state, client may be disconnected');
       return { 
         success: false, 
-        error: `WhatsApp not connected. State: ${state}`,
+        error: 'Cannot get client state',
+        shouldRetry: true
+      };
+    }
+
+    // Accept both CONNECTED and OPENING states for message sending
+    if (clientState !== 'CONNECTED' && clientState !== 'OPENING') {
+      console.log(`⚠️ WhatsApp state: ${clientState}. Cannot send message.`);
+      
+      // If state is DISCONNECTED, trigger reconnection
+      if (clientState === 'DISCONNECTED') {
+        whatsappReady = false;
+        handleReconnection();
+      }
+      
+      return { 
+        success: false, 
+        error: `WhatsApp not ready. State: ${clientState}`,
         shouldRetry: true
       };
     }
 
     const formattedNumber = number.includes('@c.us') ? number : `${number}@c.us`;
     
-    // Add timeout for message sending
+    console.log(`📤 Attempting to send message to ${formattedNumber}`);
+    
+    // Add timeout for message sending with longer timeout
     const messagePromise = whatsappClient.sendMessage(formattedNumber, message);
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Message timeout')), 30000)
+      setTimeout(() => reject(new Error('Message timeout after 45 seconds')), 45000)
     );
 
     await Promise.race([messagePromise, timeoutPromise]);
     
-    console.log(`✅ WhatsApp message sent to ${number}`);
+    console.log(`✅ WhatsApp message sent successfully to ${number}`);
     return { success: true };
 
   } catch (error) {
     console.error('❌ Error sending WhatsApp message:', error.message);
     
-    // Handle specific errors
+    // Handle specific errors more comprehensively
     if (error.message.includes('Session closed') || 
         error.message.includes('Protocol error') ||
-        error.message.includes('Target closed')) {
+        error.message.includes('Target closed') ||
+        error.message.includes('Navigation timeout') ||
+        error.message.includes('Page crashed')) {
       
-      console.log('🔄 Session closed, attempting to reconnect...');
+      console.log('🔄 Session issue detected, attempting to reconnect...');
       whatsappReady = false;
       handleReconnection();
       
       return { 
         success: false, 
-        error: 'Session closed, reconnecting...',
+        error: 'Session issue, reconnecting...',
+        shouldRetry: true
+      };
+    }
+    
+    // Handle network or temporary errors
+    if (error.message.includes('timeout') || 
+        error.message.includes('network') ||
+        error.message.includes('ECONNRESET')) {
+      
+      return { 
+        success: false, 
+        error: `Network issue: ${error.message}`,
         shouldRetry: true
       };
     }
@@ -220,27 +263,82 @@ const sendWhatsAppMessage = async (number, message) => {
   }
 };
 
-// Message queue for failed messages
-const messageQueue = [];
-
-// Process message queue
+// Process message queue with better error handling
 const processMessageQueue = async () => {
-  if (!whatsappReady || messageQueue.length === 0) return;
+  if (messageQueue.length === 0) return;
 
   console.log(`📤 Processing ${messageQueue.length} queued messages`);
   
-  while (messageQueue.length > 0 && whatsappReady) {
+  // Check if client is actually ready before processing queue
+  if (!whatsappClient) {
+    console.log('⚠️ WhatsApp client not available, keeping messages in queue');
+    return;
+  }
+
+  try {
+    const state = await whatsappClient.getState();
+    if (state !== 'CONNECTED' && state !== 'OPENING') {
+      console.log(`⚠️ WhatsApp not ready (${state}), keeping messages in queue`);
+      return;
+    }
+  } catch (error) {
+    console.log('⚠️ Cannot check WhatsApp state, keeping messages in queue');
+    return;
+  }
+  
+  while (messageQueue.length > 0) {
     const queuedMessage = messageQueue.shift();
     const result = await sendWhatsAppMessage(queuedMessage.number, queuedMessage.message);
     
     if (!result.success && result.shouldRetry) {
       // Put message back in queue if it should be retried
       messageQueue.unshift(queuedMessage);
+      console.log('📝 Message returned to queue for retry');
       break;
     }
     
+    if (result.success) {
+      console.log('✅ Queued message sent successfully');
+    } else {
+      console.log(`❌ Queued message failed permanently: ${result.error}`);
+    }
+    
     // Small delay between messages
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
+  }
+};
+
+// Periodic status check and queue processing
+const performPeriodicMaintenance = async () => {
+  try {
+    // Check WhatsApp status
+    if (whatsappClient) {
+      const state = await whatsappClient.getState();
+      const info = whatsappClient.info;
+      
+      // Update ready state based on actual status
+      const isActuallyReady = (state === 'CONNECTED' || state === 'OPENING') && info;
+      
+      if (isActuallyReady !== whatsappReady) {
+        whatsappReady = isActuallyReady;
+        console.log(`📊 WhatsApp ready state updated: ${whatsappReady} (State: ${state})`);
+        
+        // Broadcast status update
+        io.emit('whatsappStatusUpdate', {
+          ready: whatsappReady,
+          state: state,
+          hasInfo: !!info
+        });
+      }
+    }
+    
+    // Process message queue if ready
+    if (whatsappReady) {
+      await processMessageQueue();
+    }
+    
+  } catch (error) {
+    console.error('Error in periodic maintenance:', error);
   }
 };
 
@@ -282,7 +380,7 @@ module.exports.sendWhatsAppMessage = sendWhatsAppMessage;
 module.exports.broadcastAutomationNotification = broadcastAutomationNotification;
 module.exports.io = io;
 
-// Socket.IO Events
+// Socket.IO Events with debug handlers
 io.on('connection', (socket) => {
   console.log('👤 User connected');
 
@@ -305,12 +403,104 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Check status handler
-  socket.on('checkStatus', () => {
-    if (whatsappClient && whatsappReady) {
-      socket.emit('ready', 'WhatsApp is connected and ready!');
-    } else {
-      socket.emit('message', 'WhatsApp is not connected');
+  // Check status handler with detailed state checking
+  socket.on('checkStatus', async () => {
+    try {
+      if (whatsappClient) {
+        const state = await whatsappClient.getState();
+        const info = whatsappClient.info;
+        
+        console.log(`📊 WhatsApp Status Check - State: ${state}, Ready: ${whatsappReady}, Info: ${!!info}`);
+        
+        if (state === 'CONNECTED' && info) {
+          socket.emit('ready', 'WhatsApp is connected and ready!');
+          whatsappReady = true; // Update ready state
+        } else if (state === 'OPENING') {
+          socket.emit('message', 'WhatsApp is connecting...');
+        } else {
+          socket.emit('message', `WhatsApp status: ${state}`);
+        }
+      } else {
+        socket.emit('message', 'WhatsApp client not initialized');
+      }
+    } catch (error) {
+      console.error('Error checking WhatsApp status:', error);
+      socket.emit('message', 'Error checking WhatsApp status');
+    }
+  });
+
+  // Debug handlers
+  socket.on('debugWhatsApp', async () => {
+    console.log('\n🔍 === WHATSAPP DEBUG STATUS (Remote) ===');
+    
+    let debugInfo = {};
+    try {
+      debugInfo.clientExists = !!whatsappClient;
+      debugInfo.readyState = whatsappReady;
+      debugInfo.queueLength = messageQueue.length;
+      debugInfo.reconnectAttempts = reconnectAttempts;
+      
+      if (whatsappClient) {
+        try {
+          debugInfo.state = await whatsappClient.getState();
+        } catch (e) {
+          debugInfo.stateError = e.message;
+        }
+        
+        debugInfo.hasInfo = !!whatsappClient.info;
+        if (whatsappClient.info) {
+          debugInfo.phoneNumber = whatsappClient.info.wid.user;
+          debugInfo.platform = whatsappClient.info.platform;
+        }
+      }
+      
+      console.log('Debug Info:', debugInfo);
+      socket.emit('debugComplete', debugInfo);
+      
+    } catch (error) {
+      console.error('Debug error:', error);
+      socket.emit('debugComplete', { error: error.message });
+    }
+  });
+
+  socket.on('forceRefreshWhatsApp', async () => {
+    try {
+      await performPeriodicMaintenance();
+      socket.emit('refreshComplete', { success: true, message: 'Status refreshed' });
+    } catch (error) {
+      socket.emit('refreshComplete', { success: false, message: error.message });
+    }
+  });
+
+  socket.on('restartWhatsAppClient', async () => {
+    try {
+      console.log('🔄 Remote restart request received');
+      
+      // Cleanup existing client
+      if (whatsappClient) {
+        try {
+          await whatsappClient.destroy();
+        } catch (error) {
+          console.log('⚠️ Error destroying old client:', error.message);
+        }
+      }
+      
+      // Reset states
+      whatsappClient = null;
+      whatsappReady = false;
+      reconnectAttempts = 0;
+      
+      // Create new client after delay
+      setTimeout(() => {
+        whatsappClient = createWhatsAppClient();
+        whatsappClient.initialize();
+        console.log('🔄 New WhatsApp client initialized via remote restart');
+      }, 3000);
+      
+      socket.emit('restartComplete', { success: true, message: 'Client restart initiated' });
+      
+    } catch (error) {
+      socket.emit('restartComplete', { success: false, message: error.message });
     }
   });
 
@@ -375,8 +565,8 @@ server.listen(PORT, () => {
     }
   }, 2000);
   
-  // Process message queue periodically
-  setInterval(processMessageQueue, 10000); // Every 10 seconds
+  // Process message queue periodically with better timing
+  setInterval(performPeriodicMaintenance, 15000); // Every 15 seconds
   
   // Start schedule monitoring
   setTimeout(() => {
@@ -386,7 +576,7 @@ server.listen(PORT, () => {
     } catch (error) {
       console.error('❌ Error starting schedule automation:', error);
     }
-  }, 20000); // Wait longer for WhatsApp to be ready
+  }, 25000); // Wait longer for WhatsApp to be fully ready
   
   // Start sensor simulation
   setTimeout(() => {
