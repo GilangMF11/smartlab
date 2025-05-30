@@ -1,351 +1,1448 @@
 <!doctype html>
 <html class="no-js " lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<meta name="description" content="SmartLabo IoT Dashboard">
-<link rel="icon" type="image/png" href="assets/images/logo2.png">
-<title>SmartLabo Dashboard</title>
-<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/plugins/morrisjs/morris.css">
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/color_skins.css">
-<style>
-    
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="description" content="SmartLabo IoT Dashboard">
+  <link rel="icon" type="image/png" href="assets/images/logo2.png">
+  <title>SmartLabo Dashboard</title>
+  <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/color_skins.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
     #qrcode {
-      max-width: 300px;
+      max-width: 250px;
       margin: 0 auto;
     }
-    .status {
-      padding: 10px;
-      background-color: #f0f0f0;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    button {
-      background-color: #4CAF50;
+
+    .whatsapp-section {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      border-radius: 15px;
+      padding: 25px;
       color: white;
-      padding: 10px 15px;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    }
+
+    .status-indicator {
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-connected {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .status-waiting {
+      background: rgba(255, 193, 7, 0.2);
+      color: #fff;
+      border: 2px solid rgba(255, 193, 7, 0.3);
+    }
+
+    .whatsapp-form {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      margin-top: 20px;
+    }
+
+    .whatsapp-input {
+      background: rgba(255, 255, 255, 0.9);
       border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 14px;
     }
-    button:hover {
-      background-color: #45a049;
+
+    .whatsapp-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
     }
-    #logs {
+
+    .btn-whatsapp {
+      background: #fff;
+      color: #25D366;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-whatsapp:hover {
+      background: #f8f9fa;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .schedule-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: white;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .schedule-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-active {
+      background: rgba(40, 167, 69, 0.2);
+      color: #28a745;
+      border: 2px solid rgba(40, 167, 69, 0.3);
+    }
+
+    .status-inactive {
+      background: rgba(220, 53, 69, 0.2);
+      color: #dc3545;
+      border: 2px solid rgba(220, 53, 69, 0.3);
+    }
+
+    .time-input {
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 5px;
+      color: #333;
+      width: 140px;
+    }
+
+    .schedule-controls {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-schedule {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      margin: 5px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-save {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-schedule:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .current-time-display {
+      background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(255, 234, 167, 0.4);
+    }
+
+    .logs-container {
+      background: #2d3436;
+      border-radius: 10px;
+      padding: 15px;
       height: 200px;
       overflow-y: auto;
-      border: 1px solid #ddd;
-      padding: 10px;
-      background-color: #f9f9f9;
-      font-family: monospace;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #00ff00;
     }
+
     .log-item {
-      margin-bottom: 5px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 5px;
+      margin-bottom: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid #444;
+    }
+
+    .relay-section {
+      background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+      border-radius: 15px;
+      padding: 20px;
+      color: white;
+      box-shadow: 0 10px 30px rgba(116, 185, 255, 0.3);
+    }
+
+    .chart-section {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .nav-tabs .nav-link {
+      border-radius: 10px 10px 0 0;
+      border: none;
+      background: rgba(0, 0, 0, 0.05);
+      color: #666;
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
+    .nav-tabs .nav-link.active {
+      background: #007bff;
+      color: white;
+    }
+
+    .tab-content {
+      background: white;
+      border-radius: 0 15px 15px 15px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .btn-quick {
+      flex: 1;
+      min-width: 120px;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-quick:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Enhanced Dashboard Styles */
+    /* Simpan sebagai public/assets/css/dashboard.css */
+
+    /* Smooth animations */
+    * {
+      transition: all 0.3s ease;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* Loading animations */
+    .loading {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: loading-shimmer 1.5s infinite;
+    }
+
+    @keyframes loading-shimmer {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    /* Pulse animation for status indicators */
+    .status-connected i {
+      animation: pulse-green 2s infinite;
+    }
+
+    .status-waiting i {
+      animation: pulse-yellow 2s infinite;
+    }
+
+    @keyframes pulse-green {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes pulse-yellow {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    /* Hover effects for cards */
+    .schedule-card:hover,
+    .whatsapp-section:hover,
+    .relay-section:hover,
+    .chart-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Button glow effects */
+    .btn-schedule:hover,
+    .btn-whatsapp:hover,
+    .btn-quick:hover {
+      box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn-save:hover {
+      box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+    }
+
+    .btn-delete:hover {
+      box-shadow: 0 0 20px rgba(220, 53, 69, 0.5);
+    }
+
+    /* Tab animations */
+    .tab-content {
+      animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Chart container enhancements */
+    .chart-section canvas {
+      border-radius: 10px;
+    }
+
+    /* Status badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .status-online {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .status-offline {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .status-warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+
+    /* Notification system */
+    .notification-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 350px;
+    }
+
+    .notification {
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      animation: slideInRight 0.5s ease;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Enhanced form controls */
+    .whatsapp-input:focus,
+    .time-input:focus {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Log enhancements */
+    .log-item {
+      animation: slideInLeft 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .log-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Success log items */
+    .logs-container .log-item:contains("✅"),
+    .logs-container .log-item:contains("SUCCESS") {
+      border-left-color: #28a745;
+    }
+
+    /* Error log items */
+    .logs-container .log-item:contains("❌"),
+    .logs-container .log-item:contains("ERROR") {
+      border-left-color: #dc3545;
+    }
+
+    /* Warning log items */
+    .logs-container .log-item:contains("⚠️"),
+    .logs-container .log-item:contains("WARNING") {
+      border-left-color: #ffc107;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive enhancements */
+    @media (max-width: 768px) {
+      .current-time-display {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      .section-title {
+        font-size: 16px;
+      }
+
+      .btn-quick {
+        min-width: 100px;
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .time-input {
+        width: 100px;
+      }
+
+      .notification-container {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+      }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      .chart-section {
+        background: #2d3436;
+        color: white;
+      }
+
+      .whatsapp-input {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .logs-container {
+        background: #1a1a1a;
+        color: #00ff00;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+
+      .btn,
+      .nav-tabs,
+      .notification-container {
+        display: none !important;
+      }
+
+      .tab-content {
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      .schedule-card,
+      .whatsapp-section,
+      .relay-section,
+      .chart-section {
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+    }
+
+    /* Custom utilities */
+    .fade-in {
+      animation: fadeIn 0.5s ease;
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease;
+    }
+
+    .bounce-in {
+      animation: bounceIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      70% {
+        transform: scale(0.9);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
   </style>
 </head>
+
 <body class="theme-orange">
-<section class="content">
-  <div class="container-fluid">
-    <div class="row clearfix">
-      <div class="col-lg-8 col-md-8 col-sm-12">
-        <div class="card">
-          <div class="header">
-            <h2>Grafik Arus Channel</h2>
-          </div>
-          <div class="body">
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Current Time Display -->
+      <div class="current-time-display">
+        <i class="fas fa-clock"></i>
+        <span id="currentTime">Loading...</span>
+      </div>
+
+      <!-- Main Charts and Controls Row -->
+      <div class="row clearfix">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="chart-section">
+            <div class="section-title">
+              <i class="fas fa-chart-line"></i>
+              Grafik Arus Channel Real-time
+            </div>
             <canvas id="currentChart" height="160"></canvas>
           </div>
         </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card">
-          <div class="header">
-            <h2>Kontrol Relay 4 Channel</h2>
-          </div>
-          <div class="body">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="relay-section">
+            <div class="section-title">
+              <i class="fas fa-toggle-on"></i>
+              Kontrol Relay 4 Channel
+            </div>
             <div class="form-group">
-              <button id="relay-btn-1" class="btn btn-block" onclick="toggleRelay(1)">Relay 1</button>
-              <button id="relay-btn-2" class="btn btn-block" onclick="toggleRelay(2)">Relay 2</button>
-              <button id="relay-btn-3" class="btn btn-block" onclick="toggleRelay(3)">Relay 3</button>
-              <button id="relay-btn-4" class="btn btn-block" onclick="toggleRelay(4)">Relay 4</button>
+              <button id="relay-btn-1" class="btn btn-block btn-schedule" onclick="toggleRelay(1)">
+                <i class="fas fa-power-off"></i> Relay 1
+              </button>
+              <button id="relay-btn-2" class="btn btn-block btn-schedule" onclick="toggleRelay(2)">
+                <i class="fas fa-power-off"></i> Relay 2
+              </button>
+              <button id="relay-btn-3" class="btn btn-block btn-schedule" onclick="toggleRelay(3)">
+                <i class="fas fa-power-off"></i> Relay 3
+              </button>
+              <button id="relay-btn-4" class="btn btn-block btn-schedule" onclick="toggleRelay(4)">
+                <i class="fas fa-power-off"></i> Relay 4
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- Tabbed Interface -->
+      <div class="row clearfix mt-4">
+        <div class="col-12">
+          <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab">
+                <i class="fas fa-calendar-alt"></i> Jadwal Otomatis
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="whatsapp-tab" data-bs-toggle="tab" data-bs-target="#whatsapp" type="button" role="tab">
+                <i class="fab fa-whatsapp"></i> WhatsApp Control
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="logs-tab" data-bs-toggle="tab" data-bs-target="#logs" type="button" role="tab">
+                <i class="fas fa-file-alt"></i> System Logs
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="mainTabContent">
+            <!-- Schedule Tab -->
+            <div class="tab-pane fade show active" id="schedule" role="tabpanel">
+              <div class="section-title">
+                <i class="fas fa-clock"></i>
+                Pengaturan Jadwal Otomatis Relay
+              </div>
+
+              <div class="quick-actions">
+                <button class="btn btn-primary btn-quick" onclick="loadSchedules()">
+                  <i class="fas fa-sync"></i> Refresh Jadwal
+                </button>
+                <button class="btn btn-warning btn-quick" onclick="checkSchedules()">
+                  <i class="fas fa-check-circle"></i> Check Manual
+                </button>
+                <button class="btn btn-success btn-quick" onclick="setAllSchedules()">
+                  <i class="fas fa-save"></i> Simpan Semua
+                </button>
+              </div>
+
+              <div class="row" id="scheduleContainer">
+                <!-- Schedule cards will be loaded here -->
+              </div>
+            </div>
+
+            <!-- WhatsApp Tab -->
+            <div class="tab-pane fade" id="whatsapp" role="tabpanel">
+              <div class="whatsapp-section">
+                <div class="section-title">
+                  <i class="fab fa-whatsapp"></i>
+                  WhatsApp Notification Center
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="status-indicator" id="whatsapp-status">
+                      <i class="fas fa-circle"></i>
+                      <span>Status: Waiting for connection...</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-outline-light btn-sm" onclick="checkWhatsAppStatus()">
+                      <i class="fas fa-sync"></i> Refresh Status
+                    </button>
+                  </div>
+                </div>
+
+                <div id="qrcode" class="text-center mt-3">
+                  <p><i class="fas fa-qrcode"></i> Loading QR Code...</p>
+                </div>
+
+                <!-- Connection Info -->
+                <div class="alert alert-info" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+                  <h6><i class="fas fa-info-circle"></i> Informasi Koneksi</h6>
+                  <ul class="mb-0">
+                    <li>Sistem akan otomatis mengirim notifikasi saat relay dimatikan</li>
+                    <li>Jika koneksi terputus, pesan akan di-queue dan dikirim ulang</li>
+                    <li>Status koneksi diperbarui secara real-time</li>
+                    <li>Nomor tujuan: 6285602924733</li>
+                  </ul>
+                </div>
+
+                <div class="whatsapp-form">
+                  <h5><i class="fas fa-paper-plane"></i> Test Notification</h5>
+                  <p>Kirim pesan test untuk memastikan sistem notifikasi berfungsi dengan baik</p>
+
+                  <input type="text" class="form-control whatsapp-input" id="testNumber" value="6285602924733" placeholder="Nomor WhatsApp (dengan kode negara)">
+
+                  <textarea class="form-control whatsapp-input" id="testMessage" rows="4" placeholder="Tulis pesan test di sini...">🤖 TEST NOTIFIKASI SISTEM
+
+Halo! Ini adalah pesan test dari SmartLabo Dashboard.
+
+✅ Sistem notifikasi WhatsApp berfungsi normal
+🕐 Waktu test: [TIMESTAMP]
+🔧 Status: Semua sistem operasional
+
+Terima kasih! 🙏</textarea>
+
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-whatsapp flex-fill" onclick="sendTestMessage()">
+                      <i class="fas fa-paper-plane"></i> Kirim Test Message
+                    </button>
+                    <button class="btn btn-whatsapp" onclick="sendQuickNotification()">
+                      <i class="fas fa-bell"></i> Quick Alert
+                    </button>
+                  </div>
+
+                  <!-- Message Queue Status -->
+                  <div class="mt-3" id="messageQueueStatus" style="display: none;">
+                    <div class="alert alert-warning" style="background: rgba(255,193,7,0.2); border: 1px solid rgba(255,193,7,0.3); color: white;">
+                      <i class="fas fa-clock"></i> <span id="queueStatusText">Messages in queue...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Logs Tab -->
+            <div class="tab-pane fade" id="logs" role="tabpanel">
+              <div class="section-title">
+                <i class="fas fa-terminal"></i>
+                System Activity Logs
+              </div>
+              <div class="logs-container" id="logsContainer">
+                <div class="log-item">[SYSTEM] Dashboard initialized...</div>
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-secondary" onclick="clearLogs()">
+                  <i class="fas fa-trash"></i> Clear Logs
+                </button>
+                <button class="btn btn-info" onclick="exportLogs()">
+                  <i class="fas fa-download"></i> Export Logs
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row clearfix">
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="card">
-          <div class="header">
-            <h2>QR Code Scanner</h2>
-          </div>
-          <div class="body text-center">
-            <div class="container">
-                <h1>WhatsApp Web.js Interface</h1>
-                
-                <div class="status" id="status">Status: Waiting for QR Code...</div>
-                
-                <div class="qr-container">
-                  <h2>Scan QR Code</h2>
-                  <div id="qrcode">
-                    <p>Loading QR Code...</p>
-                  </div>
-                </div>
-            
-                <div class="send-message">
-                  <h2>Send Message</h2>
-                  <div class="form-group">
-                    <label for="number">Phone Number (with country code, e.g., 6285602924733):</label>
-                    <input type="text" id="number" value="6285602924733" placeholder="e.g., 6285602924733">
-                  </div>
-                  <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea id="message" rows="4" placeholder="Type your message here...">Halo! Ini adalah pesan dari WhatsApp Web Interface.</textarea>
-                  </div>
-                  <button id="sendBtn">Send Message</button>
-                </div>
-                
-                <div class="logs">
-                  <h2>Logs</h2>
-                  <div id="logs"></div>
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+  </section>
 
-
-<script>
-  const socket = io();
-
-  fetch('/api/relay/status')
-    .then(res => res.json())
-    .then(relays => {
-      relays.forEach(relay => {
-        const btn = document.getElementById(`relay-btn-${relay.relay_id}`);
-        if (!btn) return;
-
-        if (relay.state) {
-          btn.classList.add('btn-success');
-          btn.classList.remove('btn-danger');
-          btn.textContent = `Relay ${relay.relay_id} (ON)`;
-        } else {
-          btn.classList.add('btn-danger');
-          btn.classList.remove('btn-success');
-          btn.textContent = `Relay ${relay.relay_id} (OFF)`;
-        }
-      });
-    })
-    .catch(err => console.error('Gagal mengambil status relay:', err));
-  const ctx = document.getElementById('currentChart').getContext('2d');
-  const currentChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [
-        { label: 'Channel 1', data: [], borderColor: '#42A5F5', fill: false },
-        { label: 'Channel 2', data: [], borderColor: '#66BB6A', fill: false },
-        { label: 'Channel 3', data: [], borderColor: '#FFA726', fill: false },
-        { label: 'Channel 4', data: [], borderColor: '#AB47BC', fill: false }
-      ]
-    },
-    options: {
-      responsive: true,
-      animation: false,
-      scales: {
-        y: { beginAtZero: true, title: { display: true, text: 'Ampere' } },
-        x: { title: { display: true, text: 'Waktu' } }
-      }
-    }
-  });
-  
-
-  function toggleRelay(channel) {
-    fetch(`/api/relay/${channel}/toggle`, { method: 'POST' })
-      .then(response => response.json())
-      .then(data => {
-        const btn = document.getElementById(`relay-btn-${channel}`);
-        if (data.status === 'ON') {
-          btn.classList.remove('btn-danger');
-          btn.classList.add('btn-success');
-          btn.textContent = `Relay ${channel} (ON)`;
-        } else {
-          btn.classList.remove('btn-success');
-          btn.classList.add('btn-danger');
-          btn.textContent = `Relay ${channel} (OFF)`;
-        }
-      })
-      .catch(error => alert(`Error: ${error.message}`));
-  }
-
-</script>
-<script>
-
-  socket.on('sensorData', (data) => {
-    const waktu = new Date().toLocaleTimeString();
-    currentChart.data.labels.push(waktu);
-    currentChart.data.datasets[0].data.push(data.arus1);
-    currentChart.data.datasets[1].data.push(data.arus2);
-    currentChart.data.datasets[2].data.push(data.arus3);
-    currentChart.data.datasets[3].data.push(data.arus4);
-    if (currentChart.data.labels.length > 10) {
-      currentChart.data.labels.shift();
-      currentChart.data.datasets.forEach(ds => ds.data.shift());
-    }
-    currentChart.update();
-  });
-</script>
-<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-<script>
-  const video = document.getElementById('qr-video');
-  const qrScanner = new Html5Qrcode("qr-video");
-  Html5Qrcode.getCameras().then(devices => {
-    if (devices && devices.length) {
-      qrScanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        qrCodeMessage => {
-          document.getElementById('scan-result').innerText = `Hasil: ${qrCodeMessage}`;
-        },
-        errorMessage => {
-          console.warn(`QR Error: ${errorMessage}`);
-        }
-      );
-    }
-  });
-</script>
-</body>
-</html>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script>
-    
-    
-    // DOM elements
-    const qrcodeElement = document.getElementById('qrcode');
-    const statusElement = document.getElementById('status');
-    const numberInput = document.getElementById('number');
-    const messageInput = document.getElementById('message');
-    const sendBtn = document.getElementById('sendBtn');
-    const onOffBtn = document.getElementById('onOffBtn');
-    const logsElement = document.getElementById('logs');
-    
-    // Log function
-    function addLog(message) {
+    const socket = io();
+
+    // Update current time
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('currentTime').innerHTML =
+        `<i class="fas fa-calendar"></i> ${now.toLocaleDateString('id-ID')} | <i class="fas fa-clock"></i> ${now.toLocaleTimeString('id-ID')}`;
+    }
+
+    // Add log function
+    function addLog(message, type = 'INFO') {
+      const logsContainer = document.getElementById('logsContainer');
       const logItem = document.createElement('div');
       logItem.className = 'log-item';
-      logItem.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
-      logsElement.appendChild(logItem);
-      logsElement.scrollTop = logsElement.scrollHeight;
+      const timestamp = new Date().toLocaleTimeString('id-ID');
+      const icon = type === 'ERROR' ? '❌' : type === 'SUCCESS' ? '✅' : type === 'WARNING' ? '⚠️' : 'ℹ️';
+      logItem.innerHTML = `[${timestamp}] ${icon} ${message}`;
+      logsContainer.appendChild(logItem);
+      logsContainer.scrollTop = logsContainer.scrollHeight;
     }
-    
-    // Socket events
-    socket.on('qr', (src) => {
-      qrcodeElement.innerHTML = `<img src="${src}" alt="QR Code">`;
-      statusElement.textContent = 'Status: QR Code received, please scan!';
-      addLog('QR Code received, please scan with WhatsApp on your phone');
-    });
-    
-    socket.on('ready', (message) => {
-      qrcodeElement.innerHTML = '<p>Connected!</p>';
-      statusElement.textContent = 'Status: ' + message;
-      addLog(message);
-    });
-    
-    socket.on('authenticated', (message) => {
-      statusElement.textContent = 'Status: ' + message;
-      addLog(message);
-    });
-    
-    socket.on('auth_failure', (message) => {
-      statusElement.textContent = 'Status: Authentication failed';
-      addLog(message);
-    });
-    
-    socket.on('disconnected', (message) => {
-      statusElement.textContent = 'Status: Disconnected';
-      addLog(message);
-    });
-    
-    socket.on('message', (message) => {
-      addLog(message);
-    });
-    
-    socket.on('messageSent', (data) => {
-      if (data.status === 'success') {
-        addLog('Message sent successfully');
-      } else {
-        addLog(`Error: ${data.message}`);
+
+    // Initialize relay status
+    fetch('/api/relay/status')
+      .then(res => res.json())
+      .then(relays => {
+        relays.forEach(relay => {
+          const btn = document.getElementById(`relay-btn-${relay.relay_id}`);
+          if (!btn) return;
+
+          if (relay.state) {
+            btn.classList.add('btn-success');
+            btn.classList.remove('btn-danger');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (ON)`;
+          } else {
+            btn.classList.add('btn-danger');
+            btn.classList.remove('btn-success');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (OFF)`;
+          }
+        });
+        addLog('Relay status loaded successfully', 'SUCCESS');
+      })
+      .catch(err => {
+        console.error('Gagal mengambil status relay:', err);
+        addLog('Failed to load relay status', 'ERROR');
+      });
+
+    // Chart initialization
+    const ctx = document.getElementById('currentChart').getContext('2d');
+    const currentChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+            label: 'Channel 1',
+            data: [],
+            borderColor: '#42A5F5',
+            backgroundColor: 'rgba(66, 165, 245, 0.1)',
+            fill: true,
+            tension: 0.4
+          },
+          {
+            label: 'Channel 2',
+            data: [],
+            borderColor: '#66BB6A',
+            backgroundColor: 'rgba(102, 187, 106, 0.1)',
+            fill: true,
+            tension: 0.4
+          },
+          {
+            label: 'Channel 3',
+            data: [],
+            borderColor: '#FFA726',
+            backgroundColor: 'rgba(255, 167, 38, 0.1)',
+            fill: true,
+            tension: 0.4
+          },
+          {
+            label: 'Channel 4',
+            data: [],
+            borderColor: '#AB47BC',
+            backgroundColor: 'rgba(171, 71, 188, 0.1)',
+            fill: true,
+            tension: 0.4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: {
+          duration: 0
+        },
+        interaction: {
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Ampere (A)'
+            },
+            grid: {
+              color: 'rgba(0,0,0,0.1)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Waktu'
+            },
+            grid: {
+              color: 'rgba(0,0,0,0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          tooltip: {
+            mode: 'index'
+          }
+        }
       }
     });
 
+    // Toggle relay function
+    function toggleRelay(channel) {
+      fetch(`/api/relay/${channel}/toggle`, {
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          const btn = document.getElementById(`relay-btn-${channel}`);
+          if (data.status === 'ON') {
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-success');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (ON)`;
+            addLog(`Relay ${channel} turned ON manually`, 'SUCCESS');
+          } else {
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-danger');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (OFF)`;
+            addLog(`Relay ${channel} turned OFF manually`, 'SUCCESS');
+          }
+        })
+        .catch(error => {
+          addLog(`Error toggling relay ${channel}: ${error.message}`, 'ERROR');
+          alert(`Error: ${error.message}`);
+        });
+    }
+
+    // Socket events for sensor data
     socket.on('sensorData', (data) => {
       const waktu = new Date().toLocaleTimeString();
-
       currentChart.data.labels.push(waktu);
       currentChart.data.datasets[0].data.push(data.arus1);
       currentChart.data.datasets[1].data.push(data.arus2);
       currentChart.data.datasets[2].data.push(data.arus3);
       currentChart.data.datasets[3].data.push(data.arus4);
 
-      // Batasi jumlah data (misal 10 titik)
-      if (currentChart.data.labels.length > 10) {
+      if (currentChart.data.labels.length > 15) {
         currentChart.data.labels.shift();
         currentChart.data.datasets.forEach(ds => ds.data.shift());
       }
-
-      currentChart.update();
+      currentChart.update('none');
     });
 
-    
-    // Send message function
-    sendBtn.addEventListener('click', () => {
-      const number = numberInput.value.trim();
-      const message = messageInput.value.trim();
-      
+    // Schedule Management Functions
+    async function loadSchedules() {
+      try {
+        addLog('Loading schedules...', 'INFO');
+        const response = await fetch('/api/schedule/status');
+        const schedules = await response.json();
+
+        const container = document.getElementById('scheduleContainer');
+        container.innerHTML = '';
+
+        for (let relayId = 1; relayId <= 4; relayId++) {
+          const schedule = schedules.find(s => s.relay_id === relayId);
+          createScheduleCard(relayId, schedule);
+        }
+
+        addLog(`Loaded ${schedules.length} schedules`, 'SUCCESS');
+      } catch (error) {
+        addLog(`Error loading schedules: ${error.message}`, 'ERROR');
+      }
+    }
+
+    function createScheduleCard(relayId, schedule = null) {
+      const container = document.getElementById('scheduleContainer');
+      const col = document.createElement('div');
+      col.className = 'col-lg-6 col-md-6 col-sm-12';
+
+      const isActive = schedule ? schedule.is_active : false;
+      const startTime = schedule ? schedule.start_time.slice(0, 5) : '07:00';
+      const endTime = schedule ? schedule.end_time.slice(0, 5) : '17:00';
+
+      col.innerHTML = `
+      <div class="schedule-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6><i class="fas fa-plug"></i> Relay Channel ${relayId}</h6>
+          <span class="schedule-status ${isActive ? 'status-active' : 'status-inactive'}">
+            ${isActive ? '✅ AKTIF' : '❌ NONAKTIF'}
+          </span>
+        </div>
+        
+        <div class="schedule-controls">
+          <div class="row">
+            <div class="col-6">
+              <label><i class="fas fa-play"></i> Jam Mulai:</label>
+              <input type="time" class="form-control time-input" 
+                     id="start-${relayId}" value="${startTime}">
+            </div>
+            <div class="col-6">
+              <label><i class="fas fa-stop"></i> Jam Selesai:</label>
+              <input type="time" class="form-control time-input" 
+                     id="end-${relayId}" value="${endTime}">
+            </div>
+          </div>
+          
+          <div class="form-check mt-3">
+            <input type="checkbox" class="form-check-input" 
+                   id="active-${relayId}" ${isActive ? 'checked' : ''}>
+            <label class="form-check-label text-white" for="active-${relayId}">
+              <i class="fas fa-robot"></i> Aktifkan Jadwal Otomatis
+            </label>
+          </div>
+          
+          <div class="mt-3">
+            <button class="btn btn-save btn-schedule" onclick="saveSchedule(${relayId})">
+              <i class="fas fa-save"></i> Simpan
+            </button>
+            <button class="btn btn-delete btn-schedule" onclick="deleteSchedule(${relayId})">
+              <i class="fas fa-trash"></i> Hapus
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+      container.appendChild(col);
+    }
+
+    async function saveSchedule(relayId) {
+      try {
+        const startTime = document.getElementById(`start-${relayId}`).value + ':00';
+        const endTime = document.getElementById(`end-${relayId}`).value + ':00';
+        const isActive = document.getElementById(`active-${relayId}`).checked;
+
+        const response = await fetch('/api/schedule/set', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            relay_id: relayId,
+            start_time: startTime,
+            end_time: endTime,
+            is_active: isActive
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          addLog(`Schedule saved for Relay ${relayId}: ${startTime.slice(0,5)}-${endTime.slice(0,5)} (${isActive ? 'Active' : 'Inactive'})`, 'SUCCESS');
+          loadSchedules();
+        } else {
+          addLog(`Error saving schedule for Relay ${relayId}: ${result.error}`, 'ERROR');
+        }
+      } catch (error) {
+        addLog(`Error saving schedule: ${error.message}`, 'ERROR');
+      }
+    }
+
+    async function deleteSchedule(relayId) {
+      if (!confirm(`Hapus jadwal untuk Relay ${relayId}?`)) return;
+
+      try {
+        const response = await fetch(`/api/schedule/${relayId}`, {
+          method: 'DELETE'
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          addLog(`Schedule deleted for Relay ${relayId}`, 'SUCCESS');
+          loadSchedules();
+        } else {
+          addLog(`Error deleting schedule: ${result.error}`, 'ERROR');
+        }
+      } catch (error) {
+        addLog(`Error deleting schedule: ${error.message}`, 'ERROR');
+      }
+    }
+
+    async function checkSchedules() {
+      try {
+        addLog('Manual schedule check triggered...', 'INFO');
+        const response = await fetch('/api/schedule/check', {
+          method: 'POST'
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          addLog('Manual schedule check completed', 'SUCCESS');
+        } else {
+          addLog(`Error in manual check: ${result.error}`, 'ERROR');
+        }
+      } catch (error) {
+        addLog(`Error in manual check: ${error.message}`, 'ERROR');
+      }
+    }
+
+    function setAllSchedules() {
+      for (let i = 1; i <= 4; i++) {
+        saveSchedule(i);
+      }
+    }
+
+    // WhatsApp Functions
+    function checkWhatsAppStatus() {
+      addLog('Checking WhatsApp connection status...', 'INFO');
+      socket.emit('checkStatus');
+    }
+
+    function sendTestMessage() {
+      const number = document.getElementById('testNumber').value.trim();
+      let message = document.getElementById('testMessage').value.trim();
+
       if (!number || !message) {
-        addLog('Please enter both number and message');
+        addLog('Please enter both number and message', 'WARNING');
         return;
       }
-      
-      addLog(`Sending message to ${number}...`);
-      socket.emit('sendMessage', { number, message });
+
+      // Replace timestamp placeholder
+      message = message.replace('[TIMESTAMP]', new Date().toLocaleString('id-ID'));
+
+      addLog(`Sending test message to ${number}...`, 'INFO');
+      socket.emit('sendMessage', {
+        number,
+        message
+      });
+    }
+
+    function sendQuickNotification() {
+      const number = document.getElementById('testNumber').value.trim();
+      const message = `🚨 QUICK ALERT - SmartLabo
+
+⚡ Quick notification test
+🕐 ${new Date().toLocaleString('id-ID')}
+✅ System operational`;
+
+      if (!number) {
+        addLog('Please enter phone number', 'WARNING');
+        return;
+      }
+
+      addLog('Sending quick notification...', 'INFO');
+      socket.emit('sendMessage', {
+        number,
+        message
+      });
+    }
+
+    // WhatsApp Socket Events
+    socket.on('qr', (src) => {
+      document.getElementById('qrcode').innerHTML = `<img src="${src}" alt="QR Code" class="img-fluid">`;
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-qrcode"></i> <span>QR Code received, please scan!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog('QR Code received, please scan with WhatsApp', 'INFO');
     });
-    
-    // Send message on off function
-    onOffBtn.addEventListener('click', () => {
-      addLog('Sending message on off...');
-      socket.emit('onOff');
+
+    socket.on('ready', (message) => {
+      document.getElementById('qrcode').innerHTML = '<p><i class="fas fa-check-circle text-success"></i> Connected!</p>';
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-check-circle"></i> <span>WhatsApp connected and ready!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
+      addLog(message, 'SUCCESS');
     });
-    // Check status on load
-    socket.emit('checkStatus');
-    
-    // Initial log
-    addLog('Interface loaded, waiting for WhatsApp connection...');
+
+    socket.on('authenticated', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-shield-alt"></i> <span>Authenticated successfully!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
+      addLog(message, 'SUCCESS');
+    });
+
+    socket.on('auth_failure', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-exclamation-triangle"></i> <span>Authentication failed</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog(message, 'ERROR');
+    });
+
+    socket.on('disconnected', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-times-circle"></i> <span>Disconnected</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog(message, 'WARNING');
+    });
+
+    socket.on('messageSent', (data) => {
+      if (data.status === 'success') {
+        addLog('WhatsApp message sent successfully', 'SUCCESS');
+      } else {
+        addLog(`WhatsApp error: ${data.message}`, 'ERROR');
+      }
+    });
+
+    // Automation notification handler
+    socket.on('automationNotification', (data) => {
+      const status = data.whatsappSent ? 'SUCCESS' : 'WARNING';
+      const message = data.whatsappSent ?
+        'Automation notification sent via WhatsApp' :
+        `Automation notification queued (${data.error || 'WhatsApp not ready'})`;
+
+      addLog(message, status);
+
+      // Show queue status if message failed
+      if (!data.whatsappSent) {
+        const queueElement = document.getElementById('messageQueueStatus');
+        const queueText = document.getElementById('queueStatusText');
+        queueElement.style.display = 'block';
+        queueText.textContent = 'Message queued for retry when WhatsApp reconnects';
+
+        // Hide after 10 seconds
+        setTimeout(() => {
+          queueElement.style.display = 'none';
+        }, 10000);
+      }
+    });
+
+    socket.on('auth_failure', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-exclamation-triangle"></i> <span>Authentication failed</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog(message, 'ERROR');
+    });
+
+    socket.on('disconnected', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-times-circle"></i> <span>Disconnected - Reconnecting...</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog(message, 'WARNING');
+    });
+
+    // Utility Functions
+    function clearLogs() {
+      document.getElementById('logsContainer').innerHTML = '';
+      addLog('Logs cleared', 'INFO');
+    }
+
+    function exportLogs() {
+      const logs = document.getElementById('logsContainer').innerText;
+      const blob = new Blob([logs], {
+        type: 'text/plain'
+      });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `smartlabo-logs-${new Date().toISOString().slice(0,10)}.txt`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      addLog('Logs exported successfully', 'SUCCESS');
+    }
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+      notification.innerHTML = `
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+
+      document.body.appendChild(notification);
+
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 5000);
+    }
+
+    // Enhanced socket events with notifications
+    socket.on('ready', (message) => {
+      document.getElementById('qrcode').innerHTML = '<p><i class="fas fa-check-circle text-success"></i> Connected!</p>';
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-check-circle"></i> <span>WhatsApp connected and ready!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
+      addLog(message, 'SUCCESS');
+      showNotification('✅ WhatsApp connected successfully!', 'success');
+    });
+
+    socket.on('authenticated', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-shield-alt"></i> <span>Authenticated successfully!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
+      addLog(message, 'SUCCESS');
+      showNotification('🔐 WhatsApp authenticated!', 'success');
+    });
+
+    // Relay status update handler
+    socket.on('relayStatusUpdate', (data) => {
+      const {
+        relay_id,
+        state,
+        source
+      } = data;
+      const btn = document.getElementById(`relay-btn-${relay_id}`);
+
+      if (btn) {
+        if (state) {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-success');
+          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (ON)`;
+        } else {
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-danger');
+          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (OFF)`;
+        }
+
+        const sourceText = source === 'automation' ? 'automatically' : 'manually';
+        addLog(`Relay ${relay_id} turned ${state ? 'ON' : 'OFF'} ${sourceText}`, 'INFO');
+
+        if (source === 'automation') {
+          showNotification(`🤖 Relay ${relay_id} ${state ? 'activated' : 'deactivated'} automatically`, 'info');
+        }
+      }
+    });
+
+    // System health check
+    function checkSystemHealth() {
+      const healthChecks = {
+        whatsapp: document.getElementById('whatsapp-status').textContent.includes('ready'),
+        schedules: true, // Assume schedules are working if no errors
+        sensors: true // Assume sensors are working if data is flowing
+      };
+
+      const healthStatus = Object.values(healthChecks).every(check => check);
+      const healthIndicator = document.getElementById('system-health');
+
+      if (healthIndicator) {
+        healthIndicator.className = healthStatus ? 'text-success' : 'text-warning';
+        healthIndicator.innerHTML = healthStatus ?
+          '<i class="fas fa-check-circle"></i> System Healthy' :
+          '<i class="fas fa-exclamation-triangle"></i> Check Status';
+      }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Ctrl/Cmd + R to refresh schedules
+      if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+        e.preventDefault();
+        loadSchedules();
+        addLog('Schedules refreshed via keyboard shortcut', 'INFO');
+      }
+
+      // Ctrl/Cmd + T to send test message
+      if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+        e.preventDefault();
+        sendTestMessage();
+      }
+    });
+
+    // Auto-refresh schedules every 5 minutes
+    setInterval(() => {
+      loadSchedules();
+      addLog('Auto-refreshing schedules...', 'INFO');
+    }, 300000); // 5 minutes
+
+    // Periodic system health check
+    setInterval(checkSystemHealth, 30000); // Every 30 seconds
+
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      updateTime();
+      setInterval(updateTime, 1000);
+      loadSchedules();
+      addLog('🚀 SmartLabo Dashboard initialized successfully', 'SUCCESS');
+
+      // Check WhatsApp status on load
+      setTimeout(() => {
+        socket.emit('checkStatus');
+      }, 2000);
+
+      // Initial system health check
+      setTimeout(checkSystemHealth, 5000);
+
+      // Show welcome notification
+      setTimeout(() => {
+        showNotification('🎉 Welcome to SmartLabo Dashboard!', 'info');
+      }, 1000);
+    });
+
+    // Handle page visibility changes
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) {
+        // Page became visible, refresh data
+        loadSchedules();
+        socket.emit('checkStatus');
+        addLog('Page became visible, refreshing data...', 'INFO');
+      }
+    });
+
+    // Handle before page unload
+    window.addEventListener('beforeunload', function(e) {
+      addLog('Dashboard closing...', 'INFO');
+    });
+
+    // Error handling for uncaught errors
+    window.addEventListener('error', function(e) {
+      addLog(`JavaScript Error: ${e.error?.message || 'Unknown error'}`, 'ERROR');
+    });
+
+    // Add system health indicator to the page header
+    setTimeout(() => {
+      const timeDisplay = document.getElementById('currentTime');
+      if (timeDisplay && timeDisplay.parentNode) {
+        const healthDiv = document.createElement('div');
+        healthDiv.innerHTML = '<span id="system-health" class="text-success"><i class="fas fa-check-circle"></i> System Healthy</span>';
+        healthDiv.style.marginTop = '10px';
+        timeDisplay.parentNode.appendChild(healthDiv);
+      }
+    }, 1000);
   </script>
+
+</body>
+
+</html>

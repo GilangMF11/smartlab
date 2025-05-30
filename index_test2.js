@@ -77,7 +77,7 @@ client.initialize();
 
 // Socket.IO events
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('✅ User Connected');
   
   // Send message event
   socket.on('sendMessage', (data) => {
