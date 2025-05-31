@@ -579,10 +579,10 @@ server.listen(PORT, () => {
   }, 25000); // Wait longer for WhatsApp to be fully ready
   
   // Start sensor simulation
-  setTimeout(() => {
-    setInterval(simulateSensorData, 3000);
-    console.log('📊 Sensor data simulation started');
-  }, 5000);
+  // setTimeout(() => {
+  //   setInterval(simulateSensorData, 3000);
+  //   console.log('📊 Sensor data simulation started');
+  // }, 5000);
   
   console.log('✅ SmartLabo server initialized successfully');
 });
