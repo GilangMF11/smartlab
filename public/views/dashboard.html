@@ -1,18 +1,19 @@
 <!doctype html>
 <html class="no-js " lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<meta name="description" content="SmartLabo IoT Dashboard">
-<link rel="icon" type="image/png" href="assets/images/logo2.png">
-<title>SmartLabo Dashboard</title>
-<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/plugins/morrisjs/morris.css">
-<link rel="stylesheet" href="assets/css/main.css">
-<link rel="stylesheet" href="assets/css/color_skins.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="description" content="SmartLabo IoT Dashboard">
+  <link rel="icon" type="image/png" href="assets/images/logo2.png">
+  <title>SmartLabo Dashboard</title>
+  <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/color_skins.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
     /* Enhanced Dashboard Styles */
     * {
       transition: all 0.3s ease;
@@ -41,7 +42,7 @@
       max-width: 250px;
       margin: 0 auto;
     }
-    
+
     .whatsapp-section {
       background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
       border-radius: 15px;
@@ -49,7 +50,7 @@
       color: white;
       box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
     }
-    
+
     .status-indicator {
       padding: 8px 16px;
       border-radius: 25px;
@@ -59,13 +60,13 @@
       align-items: center;
       gap: 8px;
     }
-    
+
     .status-connected {
       background: rgba(255, 255, 255, 0.2);
       color: #fff;
       border: 2px solid rgba(255, 255, 255, 0.3);
     }
-    
+
     .status-waiting {
       background: rgba(255, 193, 7, 0.2);
       color: #fff;
@@ -82,15 +83,29 @@
     }
 
     @keyframes pulse-green {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
     }
 
     @keyframes pulse-yellow {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
     }
-    
+
     .whatsapp-form {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
@@ -98,7 +113,7 @@
       backdrop-filter: blur(10px);
       margin-top: 20px;
     }
-    
+
     .whatsapp-input {
       background: rgba(255, 255, 255, 0.9);
       border: none;
@@ -108,13 +123,13 @@
       color: #333;
       font-size: 14px;
     }
-    
+
     .whatsapp-input:focus {
       outline: none;
       box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
       transform: scale(1.02);
     }
-    
+
     .btn-whatsapp {
       background: #fff;
       color: #25D366;
@@ -124,13 +139,13 @@
       font-weight: 600;
       transition: all 0.3s ease;
     }
-    
+
     .btn-whatsapp:hover {
       background: #f8f9fa;
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
-    
+
     .schedule-card {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       border-radius: 15px;
@@ -139,7 +154,7 @@
       color: white;
       box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
     }
-    
+
     .schedule-status {
       display: inline-flex;
       align-items: center;
@@ -149,19 +164,19 @@
       font-size: 12px;
       font-weight: 600;
     }
-    
+
     .status-active {
       background: rgba(40, 167, 69, 0.2);
       color: #28a745;
       border: 2px solid rgba(40, 167, 69, 0.3);
     }
-    
+
     .status-inactive {
       background: rgba(220, 53, 69, 0.2);
       color: #dc3545;
       border: 2px solid rgba(220, 53, 69, 0.3);
     }
-    
+
     .time-input {
       background: rgba(255, 255, 255, 0.9);
       border: none;
@@ -174,9 +189,9 @@
 
     .time-input:focus {
       transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(0,123,255,0.3);
+      box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
     }
-    
+
     .schedule-controls {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
@@ -184,7 +199,7 @@
       margin-top: 15px;
       backdrop-filter: blur(10px);
     }
-    
+
     .btn-schedule {
       border: none;
       border-radius: 8px;
@@ -193,32 +208,32 @@
       font-weight: 600;
       transition: all 0.3s ease;
     }
-    
+
     .btn-save {
       background: #28a745;
       color: white;
     }
 
     .btn-save:hover {
-      box-shadow: 0 0 20px rgba(40,167,69,0.5);
+      box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
     }
-    
+
     .btn-delete {
       background: #dc3545;
       color: white;
     }
 
     .btn-delete:hover {
-      box-shadow: 0 0 20px rgba(220,53,69,0.5);
+      box-shadow: 0 0 20px rgba(220, 53, 69, 0.5);
     }
-    
+
     .btn-schedule:hover,
     .btn-whatsapp:hover,
     .btn-quick:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
-    
+
     .current-time-display {
       background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
       border-radius: 12px;
@@ -229,7 +244,7 @@
       margin-bottom: 20px;
       box-shadow: 0 5px 20px rgba(255, 234, 167, 0.4);
     }
-    
+
     .logs-container {
       background: #2d3436;
       border-radius: 10px;
@@ -240,7 +255,7 @@
       font-size: 12px;
       color: #00ff00;
     }
-    
+
     .log-item {
       margin-bottom: 8px;
       padding: 5px 0;
@@ -250,7 +265,7 @@
     }
 
     .log-item:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     @keyframes slideInLeft {
@@ -258,12 +273,13 @@
         transform: translateX(-20px);
         opacity: 0;
       }
+
       to {
         transform: translateX(0);
         opacity: 1;
       }
     }
-    
+
     .relay-section {
       background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
       border-radius: 15px;
@@ -271,14 +287,14 @@
       color: white;
       box-shadow: 0 10px 30px rgba(116, 185, 255, 0.3);
     }
-    
+
     .chart-section {
       background: white;
       border-radius: 15px;
       padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
-    
+
     .section-title {
       display: flex;
       align-items: center;
@@ -287,26 +303,26 @@
       font-weight: 600;
       margin-bottom: 20px;
     }
-    
+
     .nav-tabs .nav-link {
       border-radius: 10px 10px 0 0;
       border: none;
-      background: rgba(0,0,0,0.05);
+      background: rgba(0, 0, 0, 0.05);
       color: #666;
       font-weight: 600;
       margin-right: 5px;
     }
-    
+
     .nav-tabs .nav-link.active {
       background: #007bff;
       color: white;
     }
-    
+
     .tab-content {
       background: white;
       border-radius: 0 15px 15px 15px;
       padding: 25px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
       animation: fadeInUp 0.5s ease;
     }
 
@@ -315,19 +331,20 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
+
     .quick-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       margin-bottom: 20px;
     }
-    
+
     .btn-quick {
       flex: 1;
       min-width: 120px;
@@ -337,10 +354,10 @@
       font-weight: 600;
       transition: all 0.3s ease;
     }
-    
+
     .btn-quick:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     /* Hover effects for cards */
@@ -349,7 +366,7 @@
     .relay-section:hover,
     .chart-section:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     }
 
     /* Chart container enhancements */
@@ -363,17 +380,17 @@
         font-size: 14px;
         padding: 10px;
       }
-      
+
       .section-title {
         font-size: 16px;
       }
-      
+
       .btn-quick {
         min-width: 100px;
         font-size: 12px;
         padding: 8px;
       }
-      
+
       .time-input {
         width: 100px;
       }
@@ -385,24 +402,26 @@
         background: #2d3436;
         color: white;
       }
-      
+
       .whatsapp-input {
-        background: rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.1);
         color: white;
       }
     }
 
     /* Print styles */
     @media print {
-      .btn, .nav-tabs {
+
+      .btn,
+      .nav-tabs {
         display: none !important;
       }
-      
+
       .tab-content {
         border: none !important;
         box-shadow: none !important;
       }
-      
+
       .schedule-card,
       .whatsapp-section,
       .relay-section,
@@ -418,147 +437,480 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
-</style>
+
+    /* Power Consumption Styles */
+    .current-power-section,
+    .period-selector,
+    .power-summary-section,
+    .power-chart-section,
+    .channel-comparison-section,
+    .power-statistics-section {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .period-buttons .btn {
+      margin: 0 5px;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .period-buttons .btn.active {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border-color: #007bff;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .current-power-card {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .current-power-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+    }
+
+    .power-summary-card {
+      background: linear-gradient(135deg, #6f42c1, #e83e8c);
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .power-summary-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
+    }
+
+    .power-value {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .power-unit {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .power-label {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .chart-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .cost-estimate {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .channel-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .channel-1 {
+      background-color: #42A5F5;
+    }
+
+    .channel-2 {
+      background-color: #66BB6A;
+    }
+
+    .channel-3 {
+      background-color: #FFA726;
+    }
+
+    .channel-4 {
+      background-color: #AB47BC;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #007bff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .period-buttons {
+        flex-direction: column;
+      }
+
+      .period-buttons .btn {
+        margin: 5px 0;
+        width: 100%;
+      }
+
+      .chart-controls {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+
+    /* Fix chart container heights */
+    .power-chart-section canvas,
+    .channel-comparison-section canvas {
+      max-height: 400px !important;
+      height: 400px !important;
+    }
+
+    .power-chart-section {
+      min-height: 450px;
+      height: auto;
+    }
+
+    .channel-comparison-section {
+      min-height: 450px;
+      height: auto;
+    }
+
+    /* Container untuk chart dengan tinggi tetap */
+    .chart-container {
+      position: relative;
+      height: 400px;
+      width: 100%;
+    }
+
+    /* Responsive chart heights */
+    @media (max-width: 768px) {
+
+      .power-chart-section canvas,
+      .channel-comparison-section canvas {
+        max-height: 300px !important;
+        height: 300px !important;
+      }
+
+      .power-chart-section,
+      .channel-comparison-section {
+        min-height: 350px;
+      }
+
+      .chart-container {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 576px) {
+
+      .power-chart-section canvas,
+      .channel-comparison-section canvas {
+        max-height: 250px !important;
+        height: 250px !important;
+      }
+
+      .power-chart-section,
+      .channel-comparison-section {
+        min-height: 300px;
+      }
+
+      .chart-container {
+        height: 250px;
+      }
+    }
+  </style>
 </head>
+
 <body class="theme-orange">
-<section class="content">
-  <div class="container-fluid">
-    <!-- Current Time Display -->
-    <div class="current-time-display">
-      <i class="fas fa-clock"></i>
-      <span id="currentTime">Loading...</span>
-    </div>
-
-    <!-- Main Charts and Controls Row -->
-    <div class="row clearfix">
-      <div class="col-lg-8 col-md-8 col-sm-12">
-        <div class="chart-section">
-          <div class="section-title">
-            <i class="fas fa-chart-line"></i>
-            Grafik Arus Channel Real-time
-          </div>
-          <canvas id="currentChart" height="160"></canvas>
-        </div>
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Current Time Display -->
+      <div class="current-time-display">
+        <i class="fas fa-clock"></i>
+        <span id="currentTime">Loading...</span>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="relay-section">
-          <div class="section-title">
-            <i class="fas fa-toggle-on"></i>
-            Kontrol Relay 4 Channel
-          </div>
-          <div class="form-group">
-            <button id="relay-btn-1" class="btn btn-block btn-schedule" onclick="toggleRelay(1)">
-              <i class="fas fa-power-off"></i> Relay 1
-            </button>
-            <button id="relay-btn-2" class="btn btn-block btn-schedule" onclick="toggleRelay(2)">
-              <i class="fas fa-power-off"></i> Relay 2
-            </button>
-            <button id="relay-btn-3" class="btn btn-block btn-schedule" onclick="toggleRelay(3)">
-              <i class="fas fa-power-off"></i> Relay 3
-            </button>
-            <button id="relay-btn-4" class="btn btn-block btn-schedule" onclick="toggleRelay(4)">
-              <i class="fas fa-power-off"></i> Relay 4
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Tabbed Interface -->
-    <div class="row clearfix mt-4">
-      <div class="col-12">
-        <ul class="nav nav-tabs" id="mainTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab">
-              <i class="fas fa-calendar-alt"></i> Jadwal Otomatis
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="whatsapp-tab" data-bs-toggle="tab" data-bs-target="#whatsapp" type="button" role="tab">
-              <i class="fab fa-whatsapp"></i> WhatsApp Control
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="logs-tab" data-bs-toggle="tab" data-bs-target="#logs" type="button" role="tab">
-              <i class="fas fa-file-alt"></i> System Logs
-            </button>
-          </li>
-        </ul>
-        
-        <div class="tab-content" id="mainTabContent">
-          <!-- Schedule Tab -->
-          <div class="tab-pane fade show active" id="schedule" role="tabpanel">
+      <!-- Main Charts and Controls Row -->
+      <div class="row clearfix">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="chart-section">
             <div class="section-title">
-              <i class="fas fa-clock"></i>
-              Pengaturan Jadwal Otomatis Relay
+              <i class="fas fa-chart-line"></i>
+              Grafik Arus Channel Real-time
             </div>
-            
-            <div class="quick-actions">
-              <button class="btn btn-primary btn-quick" onclick="loadSchedules()">
-                <i class="fas fa-sync"></i> Refresh Jadwal
-              </button>
-              <button class="btn btn-warning btn-quick" onclick="checkSchedules()">
-                <i class="fas fa-check-circle"></i> Check Manual
-              </button>
-              <button class="btn btn-success btn-quick" onclick="setAllSchedules()">
-                <i class="fas fa-save"></i> Simpan Semua
-              </button>
+            <canvas id="currentChart" height="160"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="relay-section">
+            <div class="section-title">
+              <i class="fas fa-toggle-on"></i>
+              Kontrol Relay 4 Channel
             </div>
-            
-            <div class="row" id="scheduleContainer">
-              <!-- Schedule cards will be loaded here -->
+            <div class="form-group">
+              <button id="relay-btn-1" class="btn btn-block btn-schedule" onclick="toggleRelay(1)">
+                <i class="fas fa-power-off"></i> Relay 1
+              </button>
+              <button id="relay-btn-2" class="btn btn-block btn-schedule" onclick="toggleRelay(2)">
+                <i class="fas fa-power-off"></i> Relay 2
+              </button>
+              <button id="relay-btn-3" class="btn btn-block btn-schedule" onclick="toggleRelay(3)">
+                <i class="fas fa-power-off"></i> Relay 3
+              </button>
+              <button id="relay-btn-4" class="btn btn-block btn-schedule" onclick="toggleRelay(4)">
+                <i class="fas fa-power-off"></i> Relay 4
+              </button>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- WhatsApp Tab -->
-          <div class="tab-pane fade" id="whatsapp" role="tabpanel">
-            <div class="whatsapp-section">
+      <!-- Tabbed Interface -->
+      <div class="row clearfix mt-4">
+        <div class="col-12">
+          <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+
+
+
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="schedule-tab" data-bs-toggle="tab" data-bs-target="#schedule" type="button" role="tab">
+                <i class="fas fa-calendar-alt"></i> Jadwal Otomatis
+              </button>
+            </li>
+            <!-- TAMBAHAN 1: Tab Navigation (tambahkan setelah whatsapp-tab) -->
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="power-tab" data-bs-toggle="tab" data-bs-target="#power" type="button" role="tab">
+                <i class="fas fa-bolt"></i> Konsumsi Daya
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="whatsapp-tab" data-bs-toggle="tab" data-bs-target="#whatsapp" type="button" role="tab">
+                <i class="fab fa-whatsapp"></i> WhatsApp Control
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="logs-tab" data-bs-toggle="tab" data-bs-target="#logs" type="button" role="tab">
+                <i class="fas fa-file-alt"></i> System Logs
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="mainTabContent">
+            <div class="tab-pane fade" id="power" role="tabpanel">
               <div class="section-title">
-                <i class="fab fa-whatsapp"></i>
-                WhatsApp Notification Center
+                <i class="fas fa-bolt"></i>
+                Analisis Konsumsi Daya Listrik
               </div>
-              
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <div class="status-indicator" id="whatsapp-status">
-                    <i class="fas fa-circle"></i>
-                    <span>Status: Waiting for connection...</span>
+
+              <!-- Current Power Display -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="current-power-section">
+                    <h5><i class="fas fa-flash"></i> Konsumsi Daya Saat Ini</h5>
+                    <div class="row" id="currentPowerCards">
+                      <!-- Cards akan dimuat otomatis -->
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-6 text-end">
-                  <button class="btn btn-outline-light btn-sm" onclick="checkWhatsAppStatus()">
-                    <i class="fas fa-sync"></i> Refresh Status
-                  </button>
+              </div>
+
+              <!-- Period Selection -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="period-selector">
+                    <h6><i class="fas fa-calendar-alt"></i> Pilih Periode Analisis</h6>
+                    <div class="btn-group period-buttons" role="group">
+                      <button type="button" class="btn btn-outline-primary active" data-period="1day">
+                        <i class="fas fa-clock"></i> 1 Hari
+                      </button>
+                      <button type="button" class="btn btn-outline-primary" data-period="3days">
+                        <i class="fas fa-calendar-day"></i> 3 Hari
+                      </button>
+                      <button type="button" class="btn btn-outline-primary" data-period="1week">
+                        <i class="fas fa-calendar-week"></i> 1 Minggu
+                      </button>
+                      <button type="button" class="btn btn-outline-primary" data-period="1month">
+                        <i class="fas fa-calendar"></i> 1 Bulan
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              <div id="qrcode" class="text-center mt-3">
-                <p><i class="fas fa-qrcode"></i> Loading QR Code...</p>
+
+              <!-- Summary Cards -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="power-summary-section">
+                    <h6><i class="fas fa-chart-pie"></i> Ringkasan Konsumsi (<span id="selectedPeriodText">1 Hari</span>)</h6>
+                    <div class="row" id="powerSummaryCards">
+                      <!-- Summary cards akan dimuat otomatis -->
+                    </div>
+                  </div>
+                </div>
               </div>
-              
-              <!-- Connection Info -->
-              <div class="alert alert-info" style="background: rgba(255,255,255,0.1); border: none; color: white;">
-                <h6><i class="fas fa-info-circle"></i> Informasi Koneksi</h6>
-                <ul class="mb-0">
-                  <li>Sistem akan otomatis mengirim notifikasi saat relay dimatikan</li>
-                  <li>Jika koneksi terputus, pesan akan di-queue dan dikirim ulang</li>
-                  <li>Status koneksi diperbarui secara real-time</li>
-                  <li>Nomor tujuan: 6285602924733</li>
-                </ul>
+
+              <!-- Charts -->
+              <div class="row">
+                <div class="col-lg-8 col-md-12">
+                  <div class="power-chart-section">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h6><i class="fas fa-chart-line"></i> Grafik Konsumsi Daya</h6>
+                      <div class="chart-controls">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="toggleChartType()">
+                          <i class="fas fa-exchange-alt"></i> <span id="chartTypeToggle">Energy (kWh)</span>
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary" onclick="refreshPowerData()">
+                          <i class="fas fa-sync"></i> Refresh
+                        </button>
+                      </div>
+                    </div>
+                    <canvas id="powerConsumptionChart" height="300"></canvas>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                  <div class="channel-comparison-section">
+                    <h6><i class="fas fa-chart-donut"></i> Perbandingan Channel</h6>
+                    <canvas id="channelComparisonChart" height="300"></canvas>
+                  </div>
+                </div>
               </div>
-              
-              <div class="whatsapp-form">
-                <h5><i class="fas fa-paper-plane"></i> Test Notification</h5>
-                <p>Kirim pesan test untuk memastikan sistem notifikasi berfungsi dengan baik</p>
-                
-                <input type="text" class="form-control whatsapp-input" id="testNumber" 
-                       value="6285602924733" placeholder="Nomor WhatsApp (dengan kode negara)">
-                
-                <textarea class="form-control whatsapp-input" id="testMessage" rows="4" 
-                          placeholder="Tulis pesan test di sini...">🤖 TEST NOTIFIKASI SISTEM
+
+              <!-- Statistics Table -->
+              <div class="row mt-4">
+                <div class="col-12">
+                  <div class="power-statistics-section">
+                    <h6><i class="fas fa-table"></i> Statistik Detail</h6>
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                          <tr>
+                            <th>Periode</th>
+                            <th>Channel 1 (kWh)</th>
+                            <th>Channel 2 (kWh)</th>
+                            <th>Channel 3 (kWh)</th>
+                            <th>Channel 4 (kWh)</th>
+                            <th>Total (kWh)</th>
+                            <th>Estimasi Biaya*</th>
+                          </tr>
+                        </thead>
+                        <tbody id="powerStatisticsBody">
+                          <!-- Data akan dimuat otomatis -->
+                        </tbody>
+                      </table>
+                      <small class="text-muted">*Estimasi berdasarkan tarif PLN Rp 1.467/kWh</small>
+                    </div>
+                    <button class="btn btn-success btn-sm mt-2" onclick="exportPowerData()">
+                      <i class="fas fa-download"></i> Export CSV
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Schedule Tab -->
+            <div class="tab-pane fade show active" id="schedule" role="tabpanel">
+              <div class="section-title">
+                <i class="fas fa-clock"></i>
+                Pengaturan Jadwal Otomatis Relay
+              </div>
+
+              <div class="quick-actions">
+                <button class="btn btn-primary btn-quick" onclick="loadSchedules()">
+                  <i class="fas fa-sync"></i> Refresh Jadwal
+                </button>
+                <button class="btn btn-warning btn-quick" onclick="checkSchedules()">
+                  <i class="fas fa-check-circle"></i> Check Manual
+                </button>
+                <button class="btn btn-success btn-quick" onclick="setAllSchedules()">
+                  <i class="fas fa-save"></i> Simpan Semua
+                </button>
+              </div>
+
+              <div class="row" id="scheduleContainer">
+                <!-- Schedule cards will be loaded here -->
+              </div>
+            </div>
+
+            <!-- WhatsApp Tab -->
+            <div class="tab-pane fade" id="whatsapp" role="tabpanel">
+              <div class="whatsapp-section">
+                <div class="section-title">
+                  <i class="fab fa-whatsapp"></i>
+                  WhatsApp Notification Center
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="status-indicator" id="whatsapp-status">
+                      <i class="fas fa-circle"></i>
+                      <span>Status: Waiting for connection...</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button class="btn btn-outline-light btn-sm" onclick="checkWhatsAppStatus()">
+                      <i class="fas fa-sync"></i> Refresh Status
+                    </button>
+                  </div>
+                </div>
+
+                <div id="qrcode" class="text-center mt-3">
+                  <p><i class="fas fa-qrcode"></i> Loading QR Code...</p>
+                </div>
+
+                <!-- Connection Info -->
+                <div class="alert alert-info" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+                  <h6><i class="fas fa-info-circle"></i> Informasi Koneksi</h6>
+                  <ul class="mb-0">
+                    <li>Sistem akan otomatis mengirim notifikasi saat relay dimatikan</li>
+                    <li>Jika koneksi terputus, pesan akan di-queue dan dikirim ulang</li>
+                    <li>Status koneksi diperbarui secara real-time</li>
+                    <li>Nomor tujuan: 6285602924733</li>
+                  </ul>
+                </div>
+
+                <div class="whatsapp-form">
+                  <h5><i class="fas fa-paper-plane"></i> Test Notification</h5>
+                  <p>Kirim pesan test untuk memastikan sistem notifikasi berfungsi dengan baik</p>
+
+                  <input type="text" class="form-control whatsapp-input" id="testNumber" value="6285602924733" placeholder="Nomor WhatsApp (dengan kode negara)">
+
+                  <textarea class="form-control whatsapp-input" id="testMessage" rows="4" placeholder="Tulis pesan test di sini...">🤖 TEST NOTIFIKASI SISTEM
 
 Halo! Ini adalah pesan test dari SmartLabo Dashboard.
 
@@ -567,222 +919,273 @@ Halo! Ini adalah pesan test dari SmartLabo Dashboard.
 🔧 Status: Semua sistem operasional
 
 Terima kasih! 🙏</textarea>
-                
-                <div class="d-flex gap-2">
-                  <button class="btn btn-whatsapp flex-fill" onclick="sendTestMessage()">
-                    <i class="fas fa-paper-plane"></i> Kirim Test Message
-                  </button>
-                  <button class="btn btn-whatsapp" onclick="sendQuickNotification()">
-                    <i class="fas fa-bell"></i> Quick Alert
-                  </button>
-                </div>
-                
-                <!-- Debug Controls -->
-                <div class="mt-3">
-                  <h6><i class="fas fa-tools"></i> Debug & Troubleshooting</h6>
-                  <div class="d-flex gap-2 flex-wrap">
-                    <button class="btn btn-outline-light btn-sm" onclick="debugWhatsApp()">
-                      <i class="fas fa-bug"></i> Debug Status
+
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-whatsapp flex-fill" onclick="sendTestMessage()">
+                      <i class="fas fa-paper-plane"></i> Kirim Test Message
                     </button>
-                    <button class="btn btn-outline-light btn-sm" onclick="forceRefreshStatus()">
-                      <i class="fas fa-sync"></i> Force Refresh
-                    </button>
-                    <button class="btn btn-outline-warning btn-sm" onclick="restartWhatsAppClient()">
-                      <i class="fas fa-redo"></i> Restart Client
+                    <button class="btn btn-whatsapp" onclick="sendQuickNotification()">
+                      <i class="fas fa-bell"></i> Quick Alert
                     </button>
                   </div>
-                </div>
-                
-                <!-- Message Queue Status -->
-                <div class="mt-3" id="messageQueueStatus" style="display: none;">
-                  <div class="alert alert-warning" style="background: rgba(255,193,7,0.2); border: 1px solid rgba(255,193,7,0.3); color: white;">
-                    <i class="fas fa-clock"></i> <span id="queueStatusText">Messages in queue...</span>
+
+                  <!-- Debug Controls -->
+                  <div class="mt-3">
+                    <h6><i class="fas fa-tools"></i> Debug & Troubleshooting</h6>
+                    <div class="d-flex gap-2 flex-wrap">
+                      <button class="btn btn-outline-light btn-sm" onclick="debugWhatsApp()">
+                        <i class="fas fa-bug"></i> Debug Status
+                      </button>
+                      <button class="btn btn-outline-light btn-sm" onclick="forceRefreshStatus()">
+                        <i class="fas fa-sync"></i> Force Refresh
+                      </button>
+                      <button class="btn btn-outline-warning btn-sm" onclick="restartWhatsAppClient()">
+                        <i class="fas fa-redo"></i> Restart Client
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Message Queue Status -->
+                  <div class="mt-3" id="messageQueueStatus" style="display: none;">
+                    <div class="alert alert-warning" style="background: rgba(255,193,7,0.2); border: 1px solid rgba(255,193,7,0.3); color: white;">
+                      <i class="fas fa-clock"></i> <span id="queueStatusText">Messages in queue...</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Logs Tab -->
-          <div class="tab-pane fade" id="logs" role="tabpanel">
-            <div class="section-title">
-              <i class="fas fa-terminal"></i>
-              System Activity Logs
-            </div>
-            <div class="logs-container" id="logsContainer">
-              <div class="log-item">[SYSTEM] Dashboard initialized...</div>
-            </div>
-            <div class="mt-3">
-              <button class="btn btn-secondary" onclick="clearLogs()">
-                <i class="fas fa-trash"></i> Clear Logs
-              </button>
-              <button class="btn btn-info" onclick="exportLogs()">
-                <i class="fas fa-download"></i> Export Logs
-              </button>
+            <!-- Logs Tab -->
+            <div class="tab-pane fade" id="logs" role="tabpanel">
+              <div class="section-title">
+                <i class="fas fa-terminal"></i>
+                System Activity Logs
+              </div>
+              <div class="logs-container" id="logsContainer">
+                <div class="log-item">[SYSTEM] Dashboard initialized...</div>
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-secondary" onclick="clearLogs()">
+                  <i class="fas fa-trash"></i> Clear Logs
+                </button>
+                <button class="btn btn-info" onclick="exportLogs()">
+                  <i class="fas fa-download"></i> Export Logs
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-  
-  // Update current time
-  function updateTime() {
-    const now = new Date();
-    document.getElementById('currentTime').innerHTML = 
-      `<i class="fas fa-calendar"></i> ${now.toLocaleDateString('id-ID')} | <i class="fas fa-clock"></i> ${now.toLocaleTimeString('id-ID')}`;
-  }
-  
-  // Add log function
-  function addLog(message, type = 'INFO') {
-    const logsContainer = document.getElementById('logsContainer');
-    const logItem = document.createElement('div');
-    logItem.className = 'log-item';
-    const timestamp = new Date().toLocaleTimeString('id-ID');
-    const icon = type === 'ERROR' ? '❌' : type === 'SUCCESS' ? '✅' : type === 'WARNING' ? '⚠️' : 'ℹ️';
-    logItem.innerHTML = `[${timestamp}] ${icon} ${message}`;
-    logsContainer.appendChild(logItem);
-    logsContainer.scrollTop = logsContainer.scrollHeight;
-  }
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    // Power Consumption Variables
+    let currentPeriod = '1day';
+    let powerChart = null;
+    let comparisonChart = null;
+    let chartShowingPower = true;
+    // Update current time
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('currentTime').innerHTML =
+        `<i class="fas fa-calendar"></i> ${now.toLocaleDateString('id-ID')} | <i class="fas fa-clock"></i> ${now.toLocaleTimeString('id-ID')}`;
+    }
 
-  // Initialize relay status
-  fetch('/api/relay/status')
-    .then(res => res.json())
-    .then(relays => {
-      relays.forEach(relay => {
-        const btn = document.getElementById(`relay-btn-${relay.relay_id}`);
-        if (!btn) return;
+    // Add log function
+    function addLog(message, type = 'INFO') {
+      const logsContainer = document.getElementById('logsContainer');
+      const logItem = document.createElement('div');
+      logItem.className = 'log-item';
+      const timestamp = new Date().toLocaleTimeString('id-ID');
+      const icon = type === 'ERROR' ? '❌' : type === 'SUCCESS' ? '✅' : type === 'WARNING' ? '⚠️' : 'ℹ️';
+      logItem.innerHTML = `[${timestamp}] ${icon} ${message}`;
+      logsContainer.appendChild(logItem);
+      logsContainer.scrollTop = logsContainer.scrollHeight;
+    }
 
-        if (relay.state) {
-          btn.classList.add('btn-success');
-          btn.classList.remove('btn-danger');
-          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (ON)`;
-        } else {
-          btn.classList.add('btn-danger');
-          btn.classList.remove('btn-success');
-          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (OFF)`;
-        }
+    // Initialize relay status
+    fetch('/api/relay/status')
+      .then(res => res.json())
+      .then(relays => {
+        relays.forEach(relay => {
+          const btn = document.getElementById(`relay-btn-${relay.relay_id}`);
+          if (!btn) return;
+
+          if (relay.state) {
+            btn.classList.add('btn-success');
+            btn.classList.remove('btn-danger');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (ON)`;
+          } else {
+            btn.classList.add('btn-danger');
+            btn.classList.remove('btn-success');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (OFF)`;
+          }
+        });
+        addLog('Relay status loaded successfully', 'SUCCESS');
+      })
+      .catch(err => {
+        console.error('Gagal mengambil status relay:', err);
+        addLog('Failed to load relay status', 'ERROR');
       });
-      addLog('Relay status loaded successfully', 'SUCCESS');
-    })
-    .catch(err => {
-      console.error('Gagal mengambil status relay:', err);
-      addLog('Failed to load relay status', 'ERROR');
+
+    // Chart initialization
+    const ctx = document.getElementById('currentChart').getContext('2d');
+    const currentChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+            label: 'Channel 1',
+            data: [],
+            borderColor: '#42A5F5',
+            backgroundColor: 'rgba(66, 165, 245, 0.1)',
+            fill: true,
+            tension: 0.4
+          },
+          {
+            label: 'Channel 2',
+            data: [],
+            borderColor: '#66BB6A',
+            backgroundColor: 'rgba(102, 187, 106, 0.1)',
+            fill: true,
+            tension: 0.4
+          },
+          {
+            label: 'Channel 3',
+            data: [],
+            borderColor: '#FFA726',
+            backgroundColor: 'rgba(255, 167, 38, 0.1)',
+            fill: true,
+            tension: 0.4
+          },
+          {
+            label: 'Channel 4',
+            data: [],
+            borderColor: '#AB47BC',
+            backgroundColor: 'rgba(171, 71, 188, 0.1)',
+            fill: true,
+            tension: 0.4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: {
+          duration: 0
+        },
+        interaction: {
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Ampere (A)'
+            },
+            grid: {
+              color: 'rgba(0,0,0,0.1)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Waktu'
+            },
+            grid: {
+              color: 'rgba(0,0,0,0.1)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          tooltip: {
+            mode: 'index'
+          }
+        }
+      }
     });
 
-  // Chart initialization
-  const ctx = document.getElementById('currentChart').getContext('2d');
-  const currentChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [
-        { label: 'Channel 1', data: [], borderColor: '#42A5F5', backgroundColor: 'rgba(66, 165, 245, 0.1)', fill: true, tension: 0.4 },
-        { label: 'Channel 2', data: [], borderColor: '#66BB6A', backgroundColor: 'rgba(102, 187, 106, 0.1)', fill: true, tension: 0.4 },
-        { label: 'Channel 3', data: [], borderColor: '#FFA726', backgroundColor: 'rgba(255, 167, 38, 0.1)', fill: true, tension: 0.4 },
-        { label: 'Channel 4', data: [], borderColor: '#AB47BC', backgroundColor: 'rgba(171, 71, 188, 0.1)', fill: true, tension: 0.4 }
-      ]
-    },
-    options: {
-      responsive: true,
-      animation: { duration: 0 },
-      interaction: { intersect: false },
-      scales: {
-        y: { 
-          beginAtZero: true, 
-          title: { display: true, text: 'Ampere (A)' },
-          grid: { color: 'rgba(0,0,0,0.1)' }
-        },
-        x: { 
-          title: { display: true, text: 'Waktu' },
-          grid: { color: 'rgba(0,0,0,0.1)' }
+    // Toggle relay function
+    function toggleRelay(channel) {
+      fetch(`/api/relay/${channel}/toggle`, {
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          const btn = document.getElementById(`relay-btn-${channel}`);
+          if (data.status === 'ON') {
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-success');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (ON)`;
+            addLog(`Relay ${channel} turned ON manually`, 'SUCCESS');
+          } else {
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-danger');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (OFF)`;
+            addLog(`Relay ${channel} turned OFF manually`, 'SUCCESS');
+          }
+        })
+        .catch(error => {
+          addLog(`Error toggling relay ${channel}: ${error.message}`, 'ERROR');
+          alert(`Error: ${error.message}`);
+        });
+    }
+
+    // Socket events for sensor data
+    socket.on('sensorData', (data) => {
+      const waktu = new Date().toLocaleTimeString();
+      currentChart.data.labels.push(waktu);
+      currentChart.data.datasets[0].data.push(data.arus1);
+      currentChart.data.datasets[1].data.push(data.arus2);
+      currentChart.data.datasets[2].data.push(data.arus3);
+      currentChart.data.datasets[3].data.push(data.arus4);
+
+      if (currentChart.data.labels.length > 15) {
+        currentChart.data.labels.shift();
+        currentChart.data.datasets.forEach(ds => ds.data.shift());
+      }
+      currentChart.update('none');
+    });
+
+    // Schedule Management Functions
+    async function loadSchedules() {
+      try {
+        addLog('Loading schedules...', 'INFO');
+        const response = await fetch('/api/schedule/status');
+        const schedules = await response.json();
+
+        const container = document.getElementById('scheduleContainer');
+        container.innerHTML = '';
+
+        for (let relayId = 1; relayId <= 4; relayId++) {
+          const schedule = schedules.find(s => s.relay_id === relayId);
+          createScheduleCard(relayId, schedule);
         }
-      },
-      plugins: {
-        legend: { position: 'top' },
-        tooltip: { mode: 'index' }
+
+        addLog(`Loaded ${schedules.length} schedules`, 'SUCCESS');
+      } catch (error) {
+        addLog(`Error loading schedules: ${error.message}`, 'ERROR');
       }
     }
-  });
 
-  // Toggle relay function
-  function toggleRelay(channel) {
-    fetch(`/api/relay/${channel}/toggle`, { method: 'POST' })
-      .then(response => response.json())
-      .then(data => {
-        const btn = document.getElementById(`relay-btn-${channel}`);
-        if (data.status === 'ON') {
-          btn.classList.remove('btn-danger');
-          btn.classList.add('btn-success');
-          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (ON)`;
-          addLog(`Relay ${channel} turned ON manually`, 'SUCCESS');
-        } else {
-          btn.classList.remove('btn-success');
-          btn.classList.add('btn-danger');
-          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (OFF)`;
-          addLog(`Relay ${channel} turned OFF manually`, 'SUCCESS');
-        }
-      })
-      .catch(error => {
-        addLog(`Error toggling relay ${channel}: ${error.message}`, 'ERROR');
-        alert(`Error: ${error.message}`);
-      });
-  }
-
-  // Socket events for sensor data
-  socket.on('sensorData', (data) => {
-    const waktu = new Date().toLocaleTimeString();
-    currentChart.data.labels.push(waktu);
-    currentChart.data.datasets[0].data.push(data.arus1);
-    currentChart.data.datasets[1].data.push(data.arus2);
-    currentChart.data.datasets[2].data.push(data.arus3);
-    currentChart.data.datasets[3].data.push(data.arus4);
-    
-    if (currentChart.data.labels.length > 15) {
-      currentChart.data.labels.shift();
-      currentChart.data.datasets.forEach(ds => ds.data.shift());
-    }
-    currentChart.update('none');
-  });
-
-  // Schedule Management Functions
-  async function loadSchedules() {
-    try {
-      addLog('Loading schedules...', 'INFO');
-      const response = await fetch('/api/schedule/status');
-      const schedules = await response.json();
-      
+    function createScheduleCard(relayId, schedule = null) {
       const container = document.getElementById('scheduleContainer');
-      container.innerHTML = '';
-      
-      for (let relayId = 1; relayId <= 4; relayId++) {
-        const schedule = schedules.find(s => s.relay_id === relayId);
-        createScheduleCard(relayId, schedule);
-      }
-      
-      addLog(`Loaded ${schedules.length} schedules`, 'SUCCESS');
-    } catch (error) {
-      addLog(`Error loading schedules: ${error.message}`, 'ERROR');
-    }
-  }
+      const col = document.createElement('div');
+      col.className = 'col-lg-6 col-md-6 col-sm-12';
 
-  function createScheduleCard(relayId, schedule = null) {
-    const container = document.getElementById('scheduleContainer');
-    const col = document.createElement('div');
-    col.className = 'col-lg-6 col-md-6 col-sm-12';
-    
-    const isActive = schedule ? schedule.is_active : false;
-    const startTime = schedule ? schedule.start_time.slice(0, 5) : '07:00';
-    const endTime = schedule ? schedule.end_time.slice(0, 5) : '17:00';
-    
-    col.innerHTML = `
+      const isActive = schedule ? schedule.is_active : false;
+      const startTime = schedule ? schedule.start_time.slice(0, 5) : '07:00';
+      const endTime = schedule ? schedule.end_time.slice(0, 5) : '17:00';
+
+      col.innerHTML = `
       <div class="schedule-card">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h6><i class="fas fa-plug"></i> Relay Channel ${relayId}</h6>
@@ -831,475 +1234,497 @@ Terima kasih! 🙏</textarea>
         </div>` : ''}
       </div>
     `;
-    
-    container.appendChild(col);
-  }
 
-  async function saveSchedule(relayId) {
-    try {
-      const startTime = document.getElementById(`start-${relayId}`).value + ':00';
-      const endTime = document.getElementById(`end-${relayId}`).value + ':00';
-      const isActive = document.getElementById(`active-${relayId}`).checked;
-      
-      const response = await fetch('/api/schedule/set', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          relay_id: relayId,
-          start_time: startTime,
-          end_time: endTime,
-          is_active: isActive
-        })
+      container.appendChild(col);
+    }
+
+    async function saveSchedule(relayId) {
+      try {
+        const startTime = document.getElementById(`start-${relayId}`).value + ':00';
+        const endTime = document.getElementById(`end-${relayId}`).value + ':00';
+        const isActive = document.getElementById(`active-${relayId}`).checked;
+
+        const response = await fetch('/api/schedule/set', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            relay_id: relayId,
+            start_time: startTime,
+            end_time: endTime,
+            is_active: isActive
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          addLog(`Schedule saved for Relay ${relayId}: ${startTime.slice(0,5)}-${endTime.slice(0,5)} (${isActive ? 'Active' : 'Inactive'})`, 'SUCCESS');
+          loadSchedules();
+          showNotification(`✅ Jadwal Relay ${relayId} berhasil disimpan!`, 'success');
+        } else {
+          addLog(`Error saving schedule for Relay ${relayId}: ${result.error}`, 'ERROR');
+          showNotification(`❌ Gagal menyimpan jadwal Relay ${relayId}`, 'danger');
+        }
+      } catch (error) {
+        addLog(`Error saving schedule: ${error.message}`, 'ERROR');
+        showNotification('❌ Terjadi kesalahan saat menyimpan', 'danger');
+      }
+    }
+
+    async function deleteSchedule(relayId) {
+      if (!confirm(`Hapus jadwal untuk Relay ${relayId}?`)) return;
+
+      try {
+        const response = await fetch(`/api/schedule/${relayId}`, {
+          method: 'DELETE'
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          addLog(`Schedule deleted for Relay ${relayId}`, 'SUCCESS');
+          loadSchedules();
+          showNotification(`🗑️ Jadwal Relay ${relayId} berhasil dihapus`, 'success');
+        } else {
+          addLog(`Error deleting schedule: ${result.error}`, 'ERROR');
+          showNotification('❌ Gagal menghapus jadwal', 'danger');
+        }
+      } catch (error) {
+        addLog(`Error deleting schedule: ${error.message}`, 'ERROR');
+        showNotification('❌ Terjadi kesalahan saat menghapus', 'danger');
+      }
+    }
+
+    async function checkSchedules() {
+      try {
+        addLog('Manual schedule check triggered...', 'INFO');
+        const response = await fetch('/api/schedule/check', {
+          method: 'POST'
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          addLog('Manual schedule check completed', 'SUCCESS');
+          showNotification('✅ Pemeriksaan jadwal manual selesai', 'success');
+        } else {
+          addLog(`Error in manual check: ${result.error}`, 'ERROR');
+          showNotification('❌ Gagal melakukan pemeriksaan manual', 'danger');
+        }
+      } catch (error) {
+        addLog(`Error in manual check: ${error.message}`, 'ERROR');
+        showNotification('❌ Terjadi kesalahan', 'danger');
+      }
+    }
+
+    function setAllSchedules() {
+      if (!confirm('Simpan semua jadwal sekaligus?')) return;
+
+      for (let i = 1; i <= 4; i++) {
+        setTimeout(() => saveSchedule(i), i * 500); // Delay untuk menghindari race condition
+      }
+      showNotification('💾 Menyimpan semua jadwal...', 'info');
+    }
+
+    // WhatsApp Functions
+    function checkWhatsAppStatus() {
+      addLog('Checking WhatsApp connection status...', 'INFO');
+      socket.emit('checkStatus');
+    }
+
+    function sendTestMessage() {
+      const number = document.getElementById('testNumber').value.trim();
+      let message = document.getElementById('testMessage').value.trim();
+
+      if (!number || !message) {
+        addLog('Please enter both number and message', 'WARNING');
+        showNotification('⚠️ Harap isi nomor dan pesan', 'warning');
+        return;
+      }
+
+      // Replace timestamp placeholder
+      message = message.replace('[TIMESTAMP]', new Date().toLocaleString('id-ID'));
+
+      addLog(`Sending test message to ${number}...`, 'INFO');
+      socket.emit('sendMessage', {
+        number,
+        message
       });
-      
-      const result = await response.json();
-      
-      if (response.ok) {
-        addLog(`Schedule saved for Relay ${relayId}: ${startTime.slice(0,5)}-${endTime.slice(0,5)} (${isActive ? 'Active' : 'Inactive'})`, 'SUCCESS');
-        loadSchedules();
-        showNotification(`✅ Jadwal Relay ${relayId} berhasil disimpan!`, 'success');
-      } else {
-        addLog(`Error saving schedule for Relay ${relayId}: ${result.error}`, 'ERROR');
-        showNotification(`❌ Gagal menyimpan jadwal Relay ${relayId}`, 'danger');
-      }
-    } catch (error) {
-      addLog(`Error saving schedule: ${error.message}`, 'ERROR');
-      showNotification('❌ Terjadi kesalahan saat menyimpan', 'danger');
     }
-  }
 
-  async function deleteSchedule(relayId) {
-    if (!confirm(`Hapus jadwal untuk Relay ${relayId}?`)) return;
-    
-    try {
-      const response = await fetch(`/api/schedule/${relayId}`, { method: 'DELETE' });
-      const result = await response.json();
-      
-      if (response.ok) {
-        addLog(`Schedule deleted for Relay ${relayId}`, 'SUCCESS');
-        loadSchedules();
-        showNotification(`🗑️ Jadwal Relay ${relayId} berhasil dihapus`, 'success');
-      } else {
-        addLog(`Error deleting schedule: ${result.error}`, 'ERROR');
-        showNotification('❌ Gagal menghapus jadwal', 'danger');
-      }
-    } catch (error) {
-      addLog(`Error deleting schedule: ${error.message}`, 'ERROR');
-      showNotification('❌ Terjadi kesalahan saat menghapus', 'danger');
-    }
-  }
-
-  async function checkSchedules() {
-    try {
-      addLog('Manual schedule check triggered...', 'INFO');
-      const response = await fetch('/api/schedule/check', { method: 'POST' });
-      const result = await response.json();
-      
-      if (response.ok) {
-        addLog('Manual schedule check completed', 'SUCCESS');
-        showNotification('✅ Pemeriksaan jadwal manual selesai', 'success');
-      } else {
-        addLog(`Error in manual check: ${result.error}`, 'ERROR');
-        showNotification('❌ Gagal melakukan pemeriksaan manual', 'danger');
-      }
-    } catch (error) {
-      addLog(`Error in manual check: ${error.message}`, 'ERROR');
-      showNotification('❌ Terjadi kesalahan', 'danger');
-    }
-  }
-
-  function setAllSchedules() {
-    if (!confirm('Simpan semua jadwal sekaligus?')) return;
-    
-    for (let i = 1; i <= 4; i++) {
-      setTimeout(() => saveSchedule(i), i * 500); // Delay untuk menghindari race condition
-    }
-    showNotification('💾 Menyimpan semua jadwal...', 'info');
-  }
-
-  // WhatsApp Functions
-  function checkWhatsAppStatus() {
-    addLog('Checking WhatsApp connection status...', 'INFO');
-    socket.emit('checkStatus');
-  }
-
-  function sendTestMessage() {
-    const number = document.getElementById('testNumber').value.trim();
-    let message = document.getElementById('testMessage').value.trim();
-    
-    if (!number || !message) {
-      addLog('Please enter both number and message', 'WARNING');
-      showNotification('⚠️ Harap isi nomor dan pesan', 'warning');
-      return;
-    }
-    
-    // Replace timestamp placeholder
-    message = message.replace('[TIMESTAMP]', new Date().toLocaleString('id-ID'));
-    
-    addLog(`Sending test message to ${number}...`, 'INFO');
-    socket.emit('sendMessage', { number, message });
-  }
-
-  function sendQuickNotification() {
-    const number = document.getElementById('testNumber').value.trim();
-    const message = `🚨 QUICK ALERT - SmartLabo
+    function sendQuickNotification() {
+      const number = document.getElementById('testNumber').value.trim();
+      const message = `🚨 QUICK ALERT - SmartLabo
 
 ⚡ Quick notification test
 🕐 ${new Date().toLocaleString('id-ID')}
 ✅ System operational`;
 
-    if (!number) {
-      addLog('Please enter phone number', 'WARNING');
-      showNotification('⚠️ Harap masukkan nomor telepon', 'warning');
-      return;
+      if (!number) {
+        addLog('Please enter phone number', 'WARNING');
+        showNotification('⚠️ Harap masukkan nomor telepon', 'warning');
+        return;
+      }
+
+      addLog('Sending quick notification...', 'INFO');
+      socket.emit('sendMessage', {
+        number,
+        message
+      });
     }
 
-    addLog('Sending quick notification...', 'INFO');
-    socket.emit('sendMessage', { number, message });
-  }
-
-  // Debug Functions
-  function debugWhatsApp() {
-    addLog('Requesting WhatsApp debug information...', 'INFO');
-    socket.emit('debugWhatsApp');
-  }
-
-  function forceRefreshStatus() {
-    addLog('Force refreshing WhatsApp status...', 'INFO');
-    socket.emit('forceRefreshWhatsApp');
-  }
-
-  function restartWhatsAppClient() {
-    if (!confirm('Restart WhatsApp client? This will disconnect current session.')) {
-      return;
+    // Debug Functions
+    function debugWhatsApp() {
+      addLog('Requesting WhatsApp debug information...', 'INFO');
+      socket.emit('debugWhatsApp');
     }
-    
-    addLog('Restarting WhatsApp client...', 'WARNING');
-    showNotification('🔄 Restarting WhatsApp client...', 'warning');
-    socket.emit('restartWhatsAppClient');
-  }
 
-  // Enhanced WhatsApp status update handler
-  socket.on('whatsappStatusUpdate', (data) => {
-    const { ready, state, hasInfo } = data;
-    const statusElement = document.getElementById('whatsapp-status');
-    
-    if (ready && state === 'CONNECTED' && hasInfo) {
-      statusElement.innerHTML = '<i class="fas fa-check-circle"></i> <span>Connected and Ready</span>';
-      statusElement.className = 'status-indicator status-connected';
-      addLog('WhatsApp status updated: Connected and ready', 'SUCCESS');
-    } else if (state === 'OPENING') {
-      statusElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Connecting...</span>';
-      statusElement.className = 'status-indicator status-waiting';
-      addLog('WhatsApp status updated: Connecting...', 'INFO');
-    } else {
-      statusElement.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <span>Status: ${state}</span>`;
-      statusElement.className = 'status-indicator status-waiting';
-      addLog(`WhatsApp status updated: ${state}`, 'WARNING');
+    function forceRefreshStatus() {
+      addLog('Force refreshing WhatsApp status...', 'INFO');
+      socket.emit('forceRefreshWhatsApp');
     }
-  });
 
-  // Automation notification handler
-  socket.on('automationNotification', (data) => {
-    const status = data.whatsappSent ? 'SUCCESS' : 'WARNING';
-    const message = data.whatsappSent ? 
-      'Automation notification sent via WhatsApp' : 
-      `Automation notification queued (${data.error || 'WhatsApp not ready'})`;
-    
-    addLog(message, status);
-    
-    // Show queue status if message failed
-    if (!data.whatsappSent) {
-      const queueElement = document.getElementById('messageQueueStatus');
-      const queueText = document.getElementById('queueStatusText');
-      queueElement.style.display = 'block';
-      queueText.textContent = 'Message queued for retry when WhatsApp reconnects';
-      
-      // Hide after 10 seconds
-      setTimeout(() => {
-        queueElement.style.display = 'none';
-      }, 10000);
+    function restartWhatsAppClient() {
+      if (!confirm('Restart WhatsApp client? This will disconnect current session.')) {
+        return;
+      }
+
+      addLog('Restarting WhatsApp client...', 'WARNING');
+      showNotification('🔄 Restarting WhatsApp client...', 'warning');
+      socket.emit('restartWhatsAppClient');
     }
-  });
 
-  // Debug event handlers
-  socket.on('debugComplete', (debugInfo) => {
-    if (debugInfo.error) {
-      addLog(`Debug error: ${debugInfo.error}`, 'ERROR');
-      return;
-    }
-    
-    addLog('=== WhatsApp Debug Info ===', 'INFO');
-    addLog(`Client exists: ${debugInfo.clientExists}`, 'INFO');
-    addLog(`Ready state: ${debugInfo.readyState}`, 'INFO');
-    addLog(`Queue length: ${debugInfo.queueLength}`, 'INFO');
-    addLog(`Reconnect attempts: ${debugInfo.reconnectAttempts}`, 'INFO');
-    
-    if (debugInfo.state) {
-      addLog(`Client state: ${debugInfo.state}`, 'INFO');
-    }
-    if (debugInfo.stateError) {
-      addLog(`State error: ${debugInfo.stateError}`, 'ERROR');
-    }
-    if (debugInfo.hasInfo) {
-      addLog(`Phone number: ${debugInfo.phoneNumber}`, 'INFO');
-      addLog(`Platform: ${debugInfo.platform}`, 'INFO');
-    }
-    
-    addLog('=== End Debug Info ===', 'INFO');
-    showNotification('🔍 Debug info logged - check System Logs tab', 'info');
-  });
+    // Enhanced WhatsApp status update handler
+    socket.on('whatsappStatusUpdate', (data) => {
+      const {
+        ready,
+        state,
+        hasInfo
+      } = data;
+      const statusElement = document.getElementById('whatsapp-status');
 
-  socket.on('refreshComplete', (result) => {
-    if (result.success) {
-      addLog('WhatsApp status refreshed successfully', 'SUCCESS');
-      showNotification('✅ Status refreshed', 'success');
-    } else {
-      addLog(`Refresh failed: ${result.message}`, 'ERROR');
-      showNotification('❌ Refresh failed', 'danger');
-    }
-  });
-
-  socket.on('restartComplete', (result) => {
-    if (result.success) {
-      addLog('WhatsApp client restart initiated', 'SUCCESS');
-      showNotification('🔄 Client restart initiated. Please wait for reconnection...', 'info');
-      
-      // Update UI to show restarting state
-      document.getElementById('whatsapp-status').innerHTML = 
-        '<i class="fas fa-spinner fa-spin"></i> <span>Restarting...</span>';
-      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
-      
-    } else {
-      addLog(`Restart failed: ${result.message}`, 'ERROR');
-      showNotification('❌ Restart failed', 'danger');
-    }
-  });
-
-  // WhatsApp Socket Events
-  socket.on('qr', (src) => {
-    document.getElementById('qrcode').innerHTML = `<img src="${src}" alt="QR Code" class="img-fluid">`;
-    document.getElementById('whatsapp-status').innerHTML = 
-      '<i class="fas fa-qrcode"></i> <span>QR Code received, please scan!</span>';
-    document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
-    addLog('QR Code received, please scan with WhatsApp', 'INFO');
-    showNotification('📱 QR Code ready - scan with your phone', 'info');
-  });
-
-  socket.on('ready', (message) => {
-    document.getElementById('qrcode').innerHTML = '<p><i class="fas fa-check-circle text-success"></i> Connected!</p>';
-    document.getElementById('whatsapp-status').innerHTML = 
-      '<i class="fas fa-check-circle"></i> <span>WhatsApp connected and ready!</span>';
-    document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
-    addLog(message, 'SUCCESS');
-    showNotification('✅ WhatsApp connected successfully!', 'success');
-  });
-
-  socket.on('authenticated', (message) => {
-    document.getElementById('whatsapp-status').innerHTML = 
-      '<i class="fas fa-shield-alt"></i> <span>Authenticated successfully!</span>';
-    document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
-    addLog(message, 'SUCCESS');
-    showNotification('🔐 WhatsApp authenticated!', 'success');
-  });
-
-  socket.on('auth_failure', (message) => {
-    document.getElementById('whatsapp-status').innerHTML = 
-      '<i class="fas fa-exclamation-triangle"></i> <span>Authentication failed</span>';
-    document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
-    addLog(message, 'ERROR');
-    showNotification('❌ WhatsApp authentication failed', 'danger');
-  });
-
-  socket.on('disconnected', (message) => {
-    document.getElementById('whatsapp-status').innerHTML = 
-      '<i class="fas fa-times-circle"></i> <span>Disconnected - Reconnecting...</span>';
-    document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
-    addLog(message, 'WARNING');
-    showNotification('⚠️ WhatsApp disconnected - attempting reconnect', 'warning');
-  });
-
-  socket.on('messageSent', (data) => {
-    if (data.status === 'success') {
-      addLog('WhatsApp message sent successfully', 'SUCCESS');
-      showNotification('✅ Pesan WhatsApp terkirim!', 'success');
-    } else {
-      addLog(`WhatsApp error: ${data.message}`, 'ERROR');
-      showNotification(`❌ Gagal mengirim: ${data.message}`, 'danger');
-    }
-  });
-
-  // Relay status update handler
-  socket.on('relayStatusUpdate', (data) => {
-    const { relay_id, state, source } = data;
-    const btn = document.getElementById(`relay-btn-${relay_id}`);
-    
-    if (btn) {
-      if (state) {
-        btn.classList.remove('btn-danger');
-        btn.classList.add('btn-success');
-        btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (ON)`;
+      if (ready && state === 'CONNECTED' && hasInfo) {
+        statusElement.innerHTML = '<i class="fas fa-check-circle"></i> <span>Connected and Ready</span>';
+        statusElement.className = 'status-indicator status-connected';
+        addLog('WhatsApp status updated: Connected and ready', 'SUCCESS');
+      } else if (state === 'OPENING') {
+        statusElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Connecting...</span>';
+        statusElement.className = 'status-indicator status-waiting';
+        addLog('WhatsApp status updated: Connecting...', 'INFO');
       } else {
-        btn.classList.remove('btn-success');
-        btn.classList.add('btn-danger');
-        btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (OFF)`;
+        statusElement.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <span>Status: ${state}</span>`;
+        statusElement.className = 'status-indicator status-waiting';
+        addLog(`WhatsApp status updated: ${state}`, 'WARNING');
       }
-      
-      const sourceText = source === 'automation' ? 'automatically' : 'manually';
-      addLog(`Relay ${relay_id} turned ${state ? 'ON' : 'OFF'} ${sourceText}`, 'INFO');
-      
-      if (source === 'automation') {
-        showNotification(`🤖 Relay ${relay_id} ${state ? 'activated' : 'deactivated'} automatically`, 'info');
+    });
+
+    // Automation notification handler
+    socket.on('automationNotification', (data) => {
+      const status = data.whatsappSent ? 'SUCCESS' : 'WARNING';
+      const message = data.whatsappSent ?
+        'Automation notification sent via WhatsApp' :
+        `Automation notification queued (${data.error || 'WhatsApp not ready'})`;
+
+      addLog(message, status);
+
+      // Show queue status if message failed
+      if (!data.whatsappSent) {
+        const queueElement = document.getElementById('messageQueueStatus');
+        const queueText = document.getElementById('queueStatusText');
+        queueElement.style.display = 'block';
+        queueText.textContent = 'Message queued for retry when WhatsApp reconnects';
+
+        // Hide after 10 seconds
+        setTimeout(() => {
+          queueElement.style.display = 'none';
+        }, 10000);
       }
+    });
+
+    // Debug event handlers
+    socket.on('debugComplete', (debugInfo) => {
+      if (debugInfo.error) {
+        addLog(`Debug error: ${debugInfo.error}`, 'ERROR');
+        return;
+      }
+
+      addLog('=== WhatsApp Debug Info ===', 'INFO');
+      addLog(`Client exists: ${debugInfo.clientExists}`, 'INFO');
+      addLog(`Ready state: ${debugInfo.readyState}`, 'INFO');
+      addLog(`Queue length: ${debugInfo.queueLength}`, 'INFO');
+      addLog(`Reconnect attempts: ${debugInfo.reconnectAttempts}`, 'INFO');
+
+      if (debugInfo.state) {
+        addLog(`Client state: ${debugInfo.state}`, 'INFO');
+      }
+      if (debugInfo.stateError) {
+        addLog(`State error: ${debugInfo.stateError}`, 'ERROR');
+      }
+      if (debugInfo.hasInfo) {
+        addLog(`Phone number: ${debugInfo.phoneNumber}`, 'INFO');
+        addLog(`Platform: ${debugInfo.platform}`, 'INFO');
+      }
+
+      addLog('=== End Debug Info ===', 'INFO');
+      showNotification('🔍 Debug info logged - check System Logs tab', 'info');
+    });
+
+    socket.on('refreshComplete', (result) => {
+      if (result.success) {
+        addLog('WhatsApp status refreshed successfully', 'SUCCESS');
+        showNotification('✅ Status refreshed', 'success');
+      } else {
+        addLog(`Refresh failed: ${result.message}`, 'ERROR');
+        showNotification('❌ Refresh failed', 'danger');
+      }
+    });
+
+    socket.on('restartComplete', (result) => {
+      if (result.success) {
+        addLog('WhatsApp client restart initiated', 'SUCCESS');
+        showNotification('🔄 Client restart initiated. Please wait for reconnection...', 'info');
+
+        // Update UI to show restarting state
+        document.getElementById('whatsapp-status').innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> <span>Restarting...</span>';
+        document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+
+      } else {
+        addLog(`Restart failed: ${result.message}`, 'ERROR');
+        showNotification('❌ Restart failed', 'danger');
+      }
+    });
+
+    // WhatsApp Socket Events
+    socket.on('qr', (src) => {
+      document.getElementById('qrcode').innerHTML = `<img src="${src}" alt="QR Code" class="img-fluid">`;
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-qrcode"></i> <span>QR Code received, please scan!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog('QR Code received, please scan with WhatsApp', 'INFO');
+      showNotification('📱 QR Code ready - scan with your phone', 'info');
+    });
+
+    socket.on('ready', (message) => {
+      document.getElementById('qrcode').innerHTML = '<p><i class="fas fa-check-circle text-success"></i> Connected!</p>';
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-check-circle"></i> <span>WhatsApp connected and ready!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
+      addLog(message, 'SUCCESS');
+      showNotification('✅ WhatsApp connected successfully!', 'success');
+    });
+
+    socket.on('authenticated', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-shield-alt"></i> <span>Authenticated successfully!</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-connected';
+      addLog(message, 'SUCCESS');
+      showNotification('🔐 WhatsApp authenticated!', 'success');
+    });
+
+    socket.on('auth_failure', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-exclamation-triangle"></i> <span>Authentication failed</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog(message, 'ERROR');
+      showNotification('❌ WhatsApp authentication failed', 'danger');
+    });
+
+    socket.on('disconnected', (message) => {
+      document.getElementById('whatsapp-status').innerHTML =
+        '<i class="fas fa-times-circle"></i> <span>Disconnected - Reconnecting...</span>';
+      document.getElementById('whatsapp-status').className = 'status-indicator status-waiting';
+      addLog(message, 'WARNING');
+      showNotification('⚠️ WhatsApp disconnected - attempting reconnect', 'warning');
+    });
+
+    socket.on('messageSent', (data) => {
+      if (data.status === 'success') {
+        addLog('WhatsApp message sent successfully', 'SUCCESS');
+        showNotification('✅ Pesan WhatsApp terkirim!', 'success');
+      } else {
+        addLog(`WhatsApp error: ${data.message}`, 'ERROR');
+        showNotification(`❌ Gagal mengirim: ${data.message}`, 'danger');
+      }
+    });
+
+    // Relay status update handler
+    socket.on('relayStatusUpdate', (data) => {
+      const {
+        relay_id,
+        state,
+        source
+      } = data;
+      const btn = document.getElementById(`relay-btn-${relay_id}`);
+
+      if (btn) {
+        if (state) {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-success');
+          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (ON)`;
+        } else {
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-danger');
+          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (OFF)`;
+        }
+
+        const sourceText = source === 'automation' ? 'automatically' : 'manually';
+        addLog(`Relay ${relay_id} turned ${state ? 'ON' : 'OFF'} ${sourceText}`, 'INFO');
+
+        if (source === 'automation') {
+          showNotification(`🤖 Relay ${relay_id} ${state ? 'activated' : 'deactivated'} automatically`, 'info');
+        }
+      }
+    });
+
+    // Utility Functions
+    function clearLogs() {
+      document.getElementById('logsContainer').innerHTML = '';
+      addLog('Logs cleared', 'INFO');
+      showNotification('🗑️ Logs cleared', 'info');
     }
-  });
 
-  // Utility Functions
-  function clearLogs() {
-    document.getElementById('logsContainer').innerHTML = '';
-    addLog('Logs cleared', 'INFO');
-    showNotification('🗑️ Logs cleared', 'info');
-  }
+    function exportLogs() {
+      const logs = document.getElementById('logsContainer').innerText;
+      const blob = new Blob([logs], {
+        type: 'text/plain'
+      });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `smartlabo-logs-${new Date().toISOString().slice(0,10)}.txt`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      addLog('Logs exported successfully', 'SUCCESS');
+      showNotification('📁 Logs exported successfully', 'success');
+    }
 
-  function exportLogs() {
-    const logs = document.getElementById('logsContainer').innerText;
-    const blob = new Blob([logs], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `smartlabo-logs-${new Date().toISOString().slice(0,10)}.txt`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    addLog('Logs exported successfully', 'SUCCESS');
-    showNotification('📁 Logs exported successfully', 'success');
-  }
-
-  // Notification System
-  function showNotification(message, type = 'info') {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
-    notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; animation: slideInRight 0.5s ease;';
-    notification.innerHTML = `
+    // Notification System
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; animation: slideInRight 0.5s ease;';
+      notification.innerHTML = `
       ${message}
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
-    
-    document.body.appendChild(notification);
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.style.animation = 'slideOutRight 0.5s ease';
-        setTimeout(() => notification.remove(), 500);
+
+      document.body.appendChild(notification);
+
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.animation = 'slideOutRight 0.5s ease';
+          setTimeout(() => notification.remove(), 500);
+        }
+      }, 5000);
+    }
+
+    // System health check
+    function checkSystemHealth() {
+      const healthChecks = {
+        whatsapp: document.getElementById('whatsapp-status').textContent.includes('ready'),
+        schedules: true, // Assume schedules are working if no errors
+        sensors: currentChart.data.labels.length > 0 // Check if sensor data is flowing
+      };
+
+      const healthStatus = Object.values(healthChecks).every(check => check);
+      const healthIndicator = document.getElementById('system-health');
+
+      if (healthIndicator) {
+        healthIndicator.className = healthStatus ? 'text-success' : 'text-warning';
+        healthIndicator.innerHTML = healthStatus ?
+          '<i class="fas fa-check-circle"></i> System Healthy' :
+          '<i class="fas fa-exclamation-triangle"></i> Check Status';
       }
-    }, 5000);
-  }
-
-  // System health check
-  function checkSystemHealth() {
-    const healthChecks = {
-      whatsapp: document.getElementById('whatsapp-status').textContent.includes('ready'),
-      schedules: true, // Assume schedules are working if no errors
-      sensors: currentChart.data.labels.length > 0 // Check if sensor data is flowing
-    };
-    
-    const healthStatus = Object.values(healthChecks).every(check => check);
-    const healthIndicator = document.getElementById('system-health');
-    
-    if (healthIndicator) {
-      healthIndicator.className = healthStatus ? 'text-success' : 'text-warning';
-      healthIndicator.innerHTML = healthStatus ? 
-        '<i class="fas fa-check-circle"></i> System Healthy' : 
-        '<i class="fas fa-exclamation-triangle"></i> Check Status';
-    }
-  }
-
-  // Keyboard shortcuts
-  document.addEventListener('keydown', function(e) {
-    // Ctrl/Cmd + R to refresh schedules
-    if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
-      e.preventDefault();
-      loadSchedules();
-      addLog('Schedules refreshed via keyboard shortcut (Ctrl+R)', 'INFO');
-    }
-    
-    // Ctrl/Cmd + T to send test message
-    if ((e.ctrlKey || e.metaKey) && e.key === 't') {
-      e.preventDefault();
-      sendTestMessage();
     }
 
-    // Ctrl/Cmd + D for debug
-    if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
-      e.preventDefault();
-      debugWhatsApp();
-    }
-  });
-
-  // Auto-refresh schedules every 5 minutes
-  setInterval(() => {
-    loadSchedules();
-    addLog('Auto-refreshing schedules...', 'INFO');
-  }, 300000); // 5 minutes
-
-  // Periodic system health check
-  setInterval(checkSystemHealth, 30000); // Every 30 seconds
-
-  // Initialize everything when page loads
-  document.addEventListener('DOMContentLoaded', function() {
-    updateTime();
-    setInterval(updateTime, 1000);
-    loadSchedules();
-    addLog('🚀 SmartLabo Dashboard initialized successfully', 'SUCCESS');
-    
-    // Check WhatsApp status on load
-    setTimeout(() => {
-      socket.emit('checkStatus');
-    }, 2000);
-    
-    // Initial system health check
-    setTimeout(checkSystemHealth, 5000);
-    
-    // Show welcome notification
-    setTimeout(() => {
-      showNotification('🎉 Welcome to SmartLabo Dashboard!', 'info');
-    }, 1000);
-
-    // Add system health indicator to current time display
-    setTimeout(() => {
-      const timeDisplay = document.querySelector('.current-time-display');
-      if (timeDisplay) {
-        const healthDiv = document.createElement('div');
-        healthDiv.innerHTML = '<span id="system-health" class="text-success" style="font-size: 14px; margin-top: 5px; display: block;"><i class="fas fa-check-circle"></i> System Healthy</span>';
-        timeDisplay.appendChild(healthDiv);
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Ctrl/Cmd + R to refresh schedules
+      if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+        e.preventDefault();
+        loadSchedules();
+        addLog('Schedules refreshed via keyboard shortcut (Ctrl+R)', 'INFO');
       }
-    }, 1000);
-  });
 
-  // Handle page visibility changes
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-      // Page became visible, refresh data
+      // Ctrl/Cmd + T to send test message
+      if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+        e.preventDefault();
+        sendTestMessage();
+      }
+
+      // Ctrl/Cmd + D for debug
+      if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+        e.preventDefault();
+        debugWhatsApp();
+      }
+    });
+
+    // Auto-refresh schedules every 5 minutes
+    setInterval(() => {
       loadSchedules();
-      socket.emit('checkStatus');
-      addLog('Page became visible, refreshing data...', 'INFO');
-    }
-  });
+      addLog('Auto-refreshing schedules...', 'INFO');
+    }, 300000); // 5 minutes
 
-  // Handle before page unload
-  window.addEventListener('beforeunload', function(e) {
-    addLog('Dashboard closing...', 'INFO');
-  });
+    // Periodic system health check
+    setInterval(checkSystemHealth, 30000); // Every 30 seconds
 
-  // Error handling for uncaught errors
-  window.addEventListener('error', function(e) {
-    addLog(`JavaScript Error: ${e.error?.message || 'Unknown error'}`, 'ERROR');
-  });
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      updateTime();
+      setInterval(updateTime, 1000);
+      loadSchedules();
+      addLog('🚀 SmartLabo Dashboard initialized successfully', 'SUCCESS');
 
-  // Add CSS animations for notifications
-  const style = document.createElement('style');
-  style.textContent = `
+      // Check WhatsApp status on load
+      setTimeout(() => {
+        socket.emit('checkStatus');
+      }, 2000);
+
+      // Initial system health check
+      setTimeout(checkSystemHealth, 5000);
+
+      // Show welcome notification
+      setTimeout(() => {
+        showNotification('🎉 Welcome to SmartLabo Dashboard!', 'info');
+      }, 1000);
+
+      // Add system health indicator to current time display
+      setTimeout(() => {
+        const timeDisplay = document.querySelector('.current-time-display');
+        if (timeDisplay) {
+          const healthDiv = document.createElement('div');
+          healthDiv.innerHTML = '<span id="system-health" class="text-success" style="font-size: 14px; margin-top: 5px; display: block;"><i class="fas fa-check-circle"></i> System Healthy</span>';
+          timeDisplay.appendChild(healthDiv);
+        }
+      }, 1000);
+    });
+
+    // Handle page visibility changes
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) {
+        // Page became visible, refresh data
+        loadSchedules();
+        socket.emit('checkStatus');
+        addLog('Page became visible, refreshing data...', 'INFO');
+      }
+    });
+
+    // Handle before page unload
+    window.addEventListener('beforeunload', function(e) {
+      addLog('Dashboard closing...', 'INFO');
+    });
+
+    // Error handling for uncaught errors
+    window.addEventListener('error', function(e) {
+      addLog(`JavaScript Error: ${e.error?.message || 'Unknown error'}`, 'ERROR');
+    });
+
+    // Add CSS animations for notifications
+    const style = document.createElement('style');
+    style.textContent = `
     @keyframes slideInRight {
       from {
         transform: translateX(100%);
@@ -1322,9 +1747,411 @@ Terima kasih! 🙏</textarea>
       }
     }
   `;
-  document.head.appendChild(style);
+    document.head.appendChild(style);
 
-</script>
+    // Initialize power consumption features
+    function initializePowerConsumption() {
+      setupPeriodButtons();
+      loadCurrentPower();
+      loadPowerConsumption(currentPeriod);
+
+      // Auto-refresh every 30 seconds for current power
+      setInterval(loadCurrentPower, 30000);
+    }
+
+    // Setup period selection buttons
+    function setupPeriodButtons() {
+      const periodButtons = document.querySelectorAll('.period-buttons .btn');
+
+      periodButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          periodButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+
+          currentPeriod = this.getAttribute('data-period');
+
+          const periodText = {
+            '1day': '1 Hari',
+            '3days': '3 Hari',
+            '1week': '1 Minggu',
+            '1month': '1 Bulan'
+          };
+          document.getElementById('selectedPeriodText').textContent = periodText[currentPeriod];
+
+          loadPowerConsumption(currentPeriod);
+          addLog(`Power period changed to: ${periodText[currentPeriod]}`, 'INFO');
+        });
+      });
+    }
+
+    // Load current power data
+    async function loadCurrentPower() {
+      try {
+        const response = await fetch('/api/sensor/power/current');
+        const data = await response.json();
+
+        if (response.ok && data.channel1) {
+          displayCurrentPowerCards(data);
+        }
+      } catch (error) {
+        addLog(`Error loading current power: ${error.message}`, 'ERROR');
+      }
+    }
+
+    // Display current power cards
+    function displayCurrentPowerCards(data) {
+      const container = document.getElementById('currentPowerCards');
+
+      const channels = ['channel1', 'channel2', 'channel3', 'channel4'];
+      const channelNames = ['Channel 1', 'Channel 2', 'Channel 3', 'Channel 4'];
+
+      container.innerHTML = channels.map((channel, index) => `
+    <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="current-power-card">
+        <div class="power-label">
+          <span class="channel-indicator channel-${index + 1}"></span>
+          ${channelNames[index]}
+        </div>
+        <div class="power-value">${data[channel].power_watt}</div>
+        <div class="power-unit">Watt</div>
+        <small>${data[channel].current_ampere} A</small>
+      </div>
+    </div>
+  `).join('');
+
+      // Add total power card
+      container.innerHTML += `
+    <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="current-power-card" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+        <div class="power-label">
+          <i class="fas fa-bolt"></i> Total Power
+        </div>
+        <div class="power-value">${data.total_power_watt}</div>
+        <div class="power-unit">Watt</div>
+        <small>Real-time</small>
+      </div>
+    </div>
+  `;
+    }
+
+    // Load power consumption data
+    async function loadPowerConsumption(period) {
+      try {
+        const response = await fetch(`/api/sensor/power/consumption/${period}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          displayPowerSummaryCards(data.summary);
+          createPowerChart(data.data);
+          createComparisonChart(data.summary.total_consumption_kwh);
+          updateStatisticsTable(data);
+
+          addLog(`Power consumption data loaded for ${data.period}`, 'SUCCESS');
+        } else {
+          addLog(`Error loading power consumption: ${data.error}`, 'ERROR');
+        }
+      } catch (error) {
+        addLog(`Error loading power consumption: ${error.message}`, 'ERROR');
+      }
+    }
+
+    // Display power summary cards
+    function displayPowerSummaryCards(summary) {
+      const container = document.getElementById('powerSummaryCards');
+
+      const channels = ['channel1', 'channel2', 'channel3', 'channel4'];
+      const channelNames = ['Channel 1', 'Channel 2', 'Channel 3', 'Channel 4'];
+
+      container.innerHTML = channels.map((channel, index) => `
+    <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="power-summary-card">
+        <div class="power-label">
+          <span class="channel-indicator channel-${index + 1}"></span>
+          ${channelNames[index]}
+        </div>
+        <div class="power-value">${summary.total_consumption_kwh[channel]}</div>
+        <div class="power-unit">kWh</div>
+      </div>
+    </div>
+  `).join('');
+
+      // Add total summary card
+      container.innerHTML += `
+    <div class="col-lg-4 col-md-8 col-sm-12">
+      <div class="power-summary-card" style="background: linear-gradient(135deg, #fd79a8, #fdcb6e);">
+        <div class="power-label">
+          <i class="fas fa-chart-pie"></i> Total Konsumsi
+        </div>
+        <div class="power-value">${summary.total_all_channels_kwh}</div>
+        <div class="power-unit">kWh</div>
+        <div class="cost-estimate">
+          ≈ Rp ${(parseFloat(summary.total_all_channels_kwh) * 1467).toLocaleString('id-ID')}
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    // Create power consumption chart
+    function createPowerChart(data) {
+      const ctx = document.getElementById('powerConsumptionChart').getContext('2d');
+
+      if (powerChart) {
+        powerChart.destroy();
+      }
+
+      const labels = data.map(item => {
+        const date = new Date(item.time);
+        return currentPeriod === '1day' || currentPeriod === '3days' ?
+          date.toLocaleTimeString('id-ID', {
+            hour: '2-digit',
+            minute: '2-digit'
+          }) :
+          date.toLocaleDateString('id-ID', {
+            month: 'short',
+            day: 'numeric'
+          });
+      });
+
+      const datasets = [{
+          label: 'Channel 1',
+          data: data.map(item => chartShowingPower ?
+            item.channels.channel1.avg_power :
+            item.channels.channel1.energy_kwh
+          ),
+          borderColor: '#42A5F5',
+          backgroundColor: 'rgba(66, 165, 245, 0.1)',
+          fill: true,
+          tension: 0.4
+        },
+        {
+          label: 'Channel 2',
+          data: data.map(item => chartShowingPower ?
+            item.channels.channel2.avg_power :
+            item.channels.channel2.energy_kwh
+          ),
+          borderColor: '#66BB6A',
+          backgroundColor: 'rgba(102, 187, 106, 0.1)',
+          fill: true,
+          tension: 0.4
+        },
+        {
+          label: 'Channel 3',
+          data: data.map(item => chartShowingPower ?
+            item.channels.channel3.avg_power :
+            item.channels.channel3.energy_kwh
+          ),
+          borderColor: '#FFA726',
+          backgroundColor: 'rgba(255, 167, 38, 0.1)',
+          fill: true,
+          tension: 0.4
+        },
+        {
+          label: 'Channel 4',
+          data: data.map(item => chartShowingPower ?
+            item.channels.channel4.avg_power :
+            item.channels.channel4.energy_kwh
+          ),
+          borderColor: '#AB47BC',
+          backgroundColor: 'rgba(171, 71, 188, 0.1)',
+          fill: true,
+          tension: 0.4
+        }
+      ];
+
+      powerChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: chartShowingPower ? 'Power (Watt)' : 'Energy (kWh)'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Time'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Create comparison donut chart
+    function createComparisonChart(consumptionData) {
+      const ctx = document.getElementById('channelComparisonChart').getContext('2d');
+
+      if (comparisonChart) {
+        comparisonChart.destroy();
+      }
+
+      const data = [
+        parseFloat(consumptionData.channel1),
+        parseFloat(consumptionData.channel2),
+        parseFloat(consumptionData.channel3),
+        parseFloat(consumptionData.channel4)
+      ];
+
+      comparisonChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Channel 1', 'Channel 2', 'Channel 3', 'Channel 4'],
+          datasets: [{
+            data: data,
+            backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726', '#AB47BC'],
+            borderWidth: 3,
+            borderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 20,
+                usePointStyle: true
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Update statistics table
+    function updateStatisticsTable(data) {
+      const tbody = document.getElementById('powerStatisticsBody');
+      const periodTexts = {
+        '1day': '1 Hari Terakhir',
+        '3days': '3 Hari Terakhir',
+        '1week': '1 Minggu Terakhir',
+        '1month': '1 Bulan Terakhir'
+      };
+
+      const consumption = data.summary.total_consumption_kwh;
+      const total = parseFloat(data.summary.total_all_channels_kwh);
+      const cost = total * 1467;
+
+      tbody.innerHTML = `
+    <tr>
+      <td><strong>${periodTexts[data.period]}</strong></td>
+      <td>${consumption.channel1}</td>
+      <td>${consumption.channel2}</td>
+      <td>${consumption.channel3}</td>
+      <td>${consumption.channel4}</td>
+      <td><strong>${data.summary.total_all_channels_kwh}</strong></td>
+      <td class="cost-estimate">Rp ${cost.toLocaleString('id-ID')}</td>
+    </tr>
+  `;
+    }
+
+    // Toggle chart type
+    function toggleChartType() {
+      chartShowingPower = !chartShowingPower;
+
+      const toggleButton = document.getElementById('chartTypeToggle');
+      toggleButton.textContent = chartShowingPower ? 'Energy (kWh)' : 'Power (W)';
+
+      loadPowerConsumption(currentPeriod);
+      addLog(`Chart view changed to: ${chartShowingPower ? 'Power (W)' : 'Energy (kWh)'}`, 'INFO');
+    }
+
+    // Refresh power data
+    function refreshPowerData() {
+      addLog('Refreshing power consumption data...', 'INFO');
+      loadCurrentPower();
+      loadPowerConsumption(currentPeriod);
+      showNotification('🔄 Data konsumsi daya di-refresh', 'info');
+    }
+
+    // Export power data
+    function exportPowerData() {
+      const period = currentPeriod;
+      const timestamp = new Date().toISOString().slice(0, 10);
+
+      fetch(`/api/sensor/power/consumption/${period}`)
+        .then(response => response.json())
+        .then(data => {
+          const csvContent = convertToCsv(data);
+          const blob = new Blob([csvContent], {
+            type: 'text/csv'
+          });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `power-consumption-${period}-${timestamp}.csv`;
+          a.click();
+          window.URL.revokeObjectURL(url);
+
+          addLog(`Power data exported for ${period}`, 'SUCCESS');
+          showNotification('📊 Data berhasil diekspor', 'success');
+        })
+        .catch(error => {
+          addLog(`Error exporting power data: ${error.message}`, 'ERROR');
+        });
+    }
+
+    // Convert to CSV
+    function convertToCsv(data) {
+      const headers = [
+        'Timestamp',
+        'Channel 1 (kWh)', 'Channel 2 (kWh)', 'Channel 3 (kWh)', 'Channel 4 (kWh)',
+        'Total (kWh)', 'Cost (IDR)'
+      ];
+
+      const rows = data.data.map(item => {
+        const totalEnergy = (
+          parseFloat(item.channels.channel1.energy_kwh) +
+          parseFloat(item.channels.channel2.energy_kwh) +
+          parseFloat(item.channels.channel3.energy_kwh) +
+          parseFloat(item.channels.channel4.energy_kwh)
+        ).toFixed(4);
+
+        const cost = (parseFloat(totalEnergy) * 1467).toFixed(0);
+
+        return [
+          new Date(item.time).toLocaleString('id-ID'),
+          item.channels.channel1.energy_kwh,
+          item.channels.channel2.energy_kwh,
+          item.channels.channel3.energy_kwh,
+          item.channels.channel4.energy_kwh,
+          totalEnergy,
+          cost
+        ];
+      });
+
+      return [headers, ...rows].map(row => row.join(',')).join('\n');
+    }
+
+    // Initialize when power tab is shown
+    document.addEventListener('shown.bs.tab', function(e) {
+      if (e.target.id === 'power-tab') {
+        initializePowerConsumption();
+        addLog('Power consumption module loaded', 'SUCCESS');
+      }
+    });
+  </script>
 
 </body>
+
 </html>
