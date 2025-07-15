@@ -1017,12 +1017,12 @@ Terima kasih! 🙏</textarea>
           if (!btn) return;
 
           if (relay.state) {
-            btn.classList.add('btn-success');
-            btn.classList.remove('btn-danger');
-            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (ON)`;
-          } else {
             btn.classList.add('btn-danger');
             btn.classList.remove('btn-success');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (ON)`;
+          } else {
+            btn.classList.add('btn-success');
+            btn.classList.remove('btn-danger');
             btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (OFF)`;
           }
         });
