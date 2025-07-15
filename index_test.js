@@ -34,7 +34,7 @@ client.on('ready', () => {
     console.log('Client sudah siap!');
     
     // Nomor tujuan (format: kode negara tanpa + diikuti nomor tanpa 0 di depan)
-    const nomorTujuan = '6285602924733@c.us';
+    const nomorTujuan = '6281548850059@c.us';
     
     // Pesan yang akan dikirim
     const pesan = 'Halo! Ini adalah pesan otomatis dari bot WhatsApp.js';

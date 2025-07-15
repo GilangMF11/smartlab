@@ -713,11 +713,11 @@
               </button>
             </li>
             <!-- TAMBAHAN 1: Tab Navigation (tambahkan setelah whatsapp-tab) -->
-            <li class="nav-item" role="presentation">
+            <!-- <li class="nav-item" role="presentation">
               <button class="nav-link" id="power-tab" data-bs-toggle="tab" data-bs-target="#power" type="button" role="tab">
                 <i class="fas fa-bolt"></i> Konsumsi Daya
               </button>
-            </li>
+            </li> -->
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="whatsapp-tab" data-bs-toggle="tab" data-bs-target="#whatsapp" type="button" role="tab">
                 <i class="fab fa-whatsapp"></i> WhatsApp Control
@@ -900,7 +900,7 @@
                     <li>Sistem akan otomatis mengirim notifikasi saat relay dimatikan</li>
                     <li>Jika koneksi terputus, pesan akan di-queue dan dikirim ulang</li>
                     <li>Status koneksi diperbarui secara real-time</li>
-                    <li>Nomor tujuan: 6285602924733</li>
+                    <li>Nomor tujuan: 6281548850059</li>
                   </ul>
                 </div>
 
@@ -908,7 +908,7 @@
                   <h5><i class="fas fa-paper-plane"></i> Test Notification</h5>
                   <p>Kirim pesan test untuk memastikan sistem notifikasi berfungsi dengan baik</p>
 
-                  <input type="text" class="form-control whatsapp-input" id="testNumber" value="6285602924733" placeholder="Nomor WhatsApp (dengan kode negara)">
+                  <input type="text" class="form-control whatsapp-input" id="testNumber" value="6281548850059" placeholder="Nomor WhatsApp (dengan kode negara)">
 
                   <textarea class="form-control whatsapp-input" id="testMessage" rows="4" placeholder="Tulis pesan test di sini...">🤖 TEST NOTIFIKASI SISTEM
 
@@ -1559,12 +1559,12 @@ Terima kasih! 🙏</textarea>
 
       if (btn) {
         if (state) {
-          btn.classList.remove('btn-danger');
-          btn.classList.add('btn-success');
-          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (ON)`;
-        } else {
           btn.classList.remove('btn-success');
           btn.classList.add('btn-danger');
+          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (ON)`;
+        } else {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-success');
           btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (OFF)`;
         }
 

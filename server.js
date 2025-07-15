@@ -345,12 +345,12 @@ const performPeriodicMaintenance = async () => {
 // Enhanced broadcast function with queuing
 const broadcastAutomationNotification = async (message) => {
   try {
-    const result = await sendWhatsAppMessage('6285602924733', message);
+    const result = await sendWhatsAppMessage('6281548850059', message);
     
     if (!result.success && result.shouldRetry) {
       // Add to queue for retry
       messageQueue.push({
-        number: '6285602924733',
+        number: '6281548850059',
         message: message,
         timestamp: new Date().toISOString(),
         type: 'automation'
@@ -517,7 +517,7 @@ Halo! Ini adalah pesan test dari SmartLabo Dashboard.
 
 Terima kasih! 🙏`;
 
-      const result = await sendWhatsAppMessage('6285602924733', testMessage);
+      const result = await sendWhatsAppMessage('6281548850059', testMessage);
       
       socket.emit('messageSent', {
         status: result.success ? 'success' : 'error',
