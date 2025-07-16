@@ -538,16 +538,16 @@ Terima kasih! 🙏`;
 });
 
 // Simulasi sensor data
-const simulateSensorData = () => {
-  const sensorData = {
-    arus1: (Math.random() * 5 + 2).toFixed(2),
-    arus2: (Math.random() * 4 + 1.5).toFixed(2),
-    arus3: (Math.random() * 6 + 1).toFixed(2),
-    arus4: (Math.random() * 3.5 + 2.5).toFixed(2)
-  };
+// const simulateSensorData = () => {
+//   const sensorData = {
+//     arus1: (Math.random() * 5 + 2).toFixed(2),
+//     arus2: (Math.random() * 4 + 1.5).toFixed(2),
+//     arus3: (Math.random() * 6 + 1).toFixed(2),
+//     arus4: (Math.random() * 3.5 + 2.5).toFixed(2)
+//   };
   
-  io.emit('sensorData', sensorData);
-};
+//   io.emit('sensorData', sensorData);
+// };
 
 // Start server
 const PORT = process.env.PORT || 3000;

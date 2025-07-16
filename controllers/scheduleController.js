@@ -129,11 +129,42 @@ exports.checkAndExecuteSchedules = async () => {
             // Jika status tidak sesuai dengan jadwal, ubah status
             if (shouldBeOn && !currentState) {
                 // Relay harus hidup tapi sedang mati
-                await toggleRelayState(relay_id, true);
-                console.log(`Relay ${relay_id} turned ON automatically`);
+                const toggleSuccess = await toggleRelayState(relay_id, true);
                 
-                // Kirim notifikasi WhatsApp (opsional untuk start)
-                // await sendWhatsAppNotification(`Relay ${relay_id} dihidupkan otomatis pada jam ${currentTime}`);
+                if (toggleSuccess) {
+                    console.log(`✅ Relay ${relay_id} turned ON automatically`);
+                    
+                    // 🔥 TAMBAHAN: Kirim notifikasi WhatsApp untuk relay menyala
+                    const onNotificationMessage = `🔌 RELAY OTOMATIS AKTIF
+
+⚡ Relay Channel ${relay_id} telah DINYALAKAN secara otomatis
+🕐 Waktu: ${now.toLocaleString('id-ID')}
+⏰ Jam Operasional: ${start_time.slice(0,5)} - ${end_time.slice(0,5)}
+🤖 Status: Perangkat mulai beroperasi sesuai jadwal
+
+Pesan otomatis dari SmartLabo IoT System`;
+
+                    // Kirim notifikasi
+                    const onNotificationSent = await sendWhatsAppNotification(onNotificationMessage);
+
+                    if (onNotificationSent) {
+                        console.log(`📱 WhatsApp ON notification sent for Relay ${relay_id}`);
+                    } else {
+                        console.log(`⚠️ WhatsApp ON notification for Relay ${relay_id} will be retried later`);
+                    }
+
+                    // Emit socket event untuk update frontend
+                    const server = require('../server');
+                    if (server.io) {
+                        server.io.emit('relayStatusUpdate', {
+                            relay_id: relay_id,
+                            state: true,
+                            source: 'automation'
+                        });
+                    }
+                } else {
+                    console.error(`❌ Failed to turn ON Relay ${relay_id}`);
+                }
                 
             } else if (!shouldBeOn && currentState) {
                 // Relay harus mati tapi sedang hidup
@@ -142,24 +173,33 @@ exports.checkAndExecuteSchedules = async () => {
                 if (toggleSuccess) {
                     console.log(`✅ Relay ${relay_id} turned OFF automatically`);
                     
-                    // Kirim notifikasi WhatsApp
-                    const notificationMessage = `🔴 NOTIFIKASI AUTOMATIS
+                    // Kirim notifikasi WhatsApp untuk relay mati
+                    const offNotificationMessage = `🔴 RELAY OTOMATIS NONAKTIF
 
-Relay Channel ${relay_id} telah dimatikan otomatis karena diluar jam operasional.
-
-⏰ Waktu: ${now.toLocaleString('id-ID')}
-🕐 Jam Operasional: ${start_time.slice(0,5)} - ${end_time.slice(0,5)}
-🔧 Status: Sistem berjalan normal
+⚡ Relay Channel ${relay_id} telah DIMATIKAN secara otomatis
+🕐 Waktu: ${now.toLocaleString('id-ID')}
+⏰ Jam Operasional: ${start_time.slice(0,5)} - ${end_time.slice(0,5)}
+🔧 Status: Perangkat berhenti beroperasi (diluar jam operasional)
 
 Pesan otomatis dari SmartLabo IoT System`;
 
                     // Attempt to send notification (with built-in retry logic)
-                    const notificationSent = await sendWhatsAppNotification(notificationMessage);
+                    const offNotificationSent = await sendWhatsAppNotification(offNotificationMessage);
                     
-                    if (notificationSent) {
-                        console.log(`📱 WhatsApp notification sent for Relay ${relay_id}`);
+                    if (offNotificationSent) {
+                        console.log(`📱 WhatsApp OFF notification sent for Relay ${relay_id}`);
                     } else {
-                        console.log(`⚠️ WhatsApp notification for Relay ${relay_id} will be retried later`);
+                        console.log(`⚠️ WhatsApp OFF notification for Relay ${relay_id} will be retried later`);
+                    }
+
+                    // Emit socket event untuk update frontend
+                    const server = require('../server');
+                    if (server.io) {
+                        server.io.emit('relayStatusUpdate', {
+                            relay_id: relay_id,
+                            state: false,
+                            source: 'automation'
+                        });
                     }
                 } else {
                     console.error(`❌ Failed to turn OFF Relay ${relay_id}`);
