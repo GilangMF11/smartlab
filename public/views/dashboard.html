@@ -683,16 +683,16 @@
               Kontrol Relay 4 Channel
             </div>
             <div class="form-group">
-              <button id="relay-btn-1" class="btn btn-block btn-schedule" onclick="toggleRelay(1)">
+              <button id="relay-btn-1" class="btn btn-block btn-schedule btn-success" onclick="toggleRelay(1)">
                 <i class="fas fa-power-off"></i> Relay 1
               </button>
-              <button id="relay-btn-2" class="btn btn-block btn-schedule" onclick="toggleRelay(2)">
+              <button id="relay-btn-2" class="btn btn-block btn-schedule btn-success" onclick="toggleRelay(2)">
                 <i class="fas fa-power-off"></i> Relay 2
               </button>
-              <button id="relay-btn-3" class="btn btn-block btn-schedule" onclick="toggleRelay(3)">
+              <button id="relay-btn-3" class="btn btn-block btn-schedule btn-success" onclick="toggleRelay(3)">
                 <i class="fas fa-power-off"></i> Relay 3
               </button>
-              <button id="relay-btn-4" class="btn btn-block btn-schedule" onclick="toggleRelay(4)">
+              <button id="relay-btn-4" class="btn btn-block btn-schedule btn-success" onclick="toggleRelay(4)">
                 <i class="fas fa-power-off"></i> Relay 4
               </button>
             </div>
@@ -1016,14 +1016,15 @@ Terima kasih! 🙏</textarea>
           const btn = document.getElementById(`relay-btn-${relay.relay_id}`);
           if (!btn) return;
 
+          // SESUDAH (logika diperbaiki)
           if (relay.state) {
             btn.classList.add('btn-danger');
             btn.classList.remove('btn-success');
-            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (ON)`;
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (Matikan)`;
           } else {
             btn.classList.add('btn-success');
             btn.classList.remove('btn-danger');
-            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (OFF)`;
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay.relay_id} (Hidupkan)`;
           }
         });
         addLog('Relay status loaded successfully', 'SUCCESS');
@@ -1121,16 +1122,15 @@ Terima kasih! 🙏</textarea>
         .then(response => response.json())
         .then(data => {
           const btn = document.getElementById(`relay-btn-${channel}`);
+          // SESUDAH (logika diperbaiki)
           if (data.status === 'ON') {
-            btn.classList.remove('btn-danger');
-            btn.classList.add('btn-success');
-            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (ON)`;
-            addLog(`Relay ${channel} turned ON manually`, 'SUCCESS');
-          } else {
             btn.classList.remove('btn-success');
             btn.classList.add('btn-danger');
-            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (OFF)`;
-            addLog(`Relay ${channel} turned OFF manually`, 'SUCCESS');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (Matikan)`;
+          } else {
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-success');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${channel} (Hidupkan)`;
           }
         })
         .catch(error => {
@@ -1559,21 +1559,22 @@ Terima kasih! 🙏</textarea>
 
       if (btn) {
         if (state) {
-          btn.classList.remove('btn-success');
-          btn.classList.add('btn-danger');
-          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (ON)`;
-        } else {
-          btn.classList.remove('btn-danger');
-          btn.classList.add('btn-success');
-          btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (OFF)`;
-        }
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-danger');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (Matikan)`;
+          } else {
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-success');
+            btn.innerHTML = `<i class="fas fa-power-off"></i> Relay ${relay_id} (Hidupkan)`;
+          }
 
         const sourceText = source === 'automation' ? 'automatically' : 'manually';
-        addLog(`Relay ${relay_id} turned ${state ? 'ON' : 'OFF'} ${sourceText}`, 'INFO');
+        addLog(`Relay ${relay_id} ${state ? 'dihidupkan' : 'dimatikan'} ${sourceText === 'automatically' ? 'otomatis' : 'manual'}`, 'INFO');
 
-        if (source === 'automation') {
-          showNotification(`🤖 Relay ${relay_id} ${state ? 'activated' : 'deactivated'} automatically`, 'info');
-        }
+        // SESUDAH
+  if (source === 'automation') {
+    showNotification(`🤖 Relay ${relay_id} ${state ? 'dihidupkan' : 'dimatikan'} otomatis`, 'info');
+  }
       }
     });
 
