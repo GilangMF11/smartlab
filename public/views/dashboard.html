@@ -567,6 +567,20 @@
       animation: spin 1s linear infinite;
     }
 
+    .current-time-display .btn-outline-danger {
+      border-color: rgba(220, 53, 69, 0.3);
+      color: #dc3545;
+      background: rgba(220, 53, 69, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .current-time-display .btn-outline-danger:hover {
+      background: #dc3545;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    }
+
     @keyframes spin {
       0% {
         transform: rotate(0deg);
@@ -663,6 +677,9 @@
       <div class="current-time-display">
         <i class="fas fa-clock"></i>
         <span id="currentTime">Loading...</span>
+        <button class="btn btn-outline-danger btn-sm ms-3" onclick="logout()" style="float: right;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
       </div>
 
       <!-- Main Charts and Controls Row -->
@@ -1610,6 +1627,55 @@ Terima kasih! 🙏</textarea>
       ${message}
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
+
+    // Logout function
+    function logout() {
+      if (!confirm('Apakah Anda yakin ingin logout?')) {
+        return;
+      }
+
+      addLog('Logging out...', 'INFO');
+      showNotification('👋 Logging out...', 'info');
+
+      // Clear any stored data
+      if (typeof(Storage) !== "undefined") {
+        localStorage.clear();
+        sessionStorage.clear();
+      }
+
+      // Send logout request to server
+      fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        // Redirect regardless of server response
+        setTimeout(() => {
+          window.location.href = '/login'; // atau '/' untuk halaman login
+        }, 1000);
+      })
+      .catch(error => {
+        console.error('Logout error:', error);
+        // Still redirect even if server request fails
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1000);
+      });
+    }
+
+    // Handle keyboard shortcut for logout (Ctrl+L)
+    document.addEventListener('keydown', function(e) {
+      // ... kode keyboard shortcuts yang sudah ada ...
+      
+      // TAMBAHKAN INI setelah shortcut yang sudah ada
+      // Ctrl/Cmd + L for logout
+      if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+        e.preventDefault();
+        logout();
+      }
+    });
 
       document.body.appendChild(notification);
 
