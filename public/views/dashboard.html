@@ -1629,6 +1629,7 @@ Terima kasih! 🙏</textarea>
     `;
 
     // Logout function
+    // Simple logout function (no API required)
     function logout() {
       if (!confirm('Apakah Anda yakin ingin logout?')) {
         return;
@@ -1637,33 +1638,42 @@ Terima kasih! 🙏</textarea>
       addLog('Logging out...', 'INFO');
       showNotification('👋 Logging out...', 'info');
 
-      // Clear any stored data
+      // Clear any stored data (jika ada)
       if (typeof(Storage) !== "undefined") {
         localStorage.clear();
         sessionStorage.clear();
       }
 
-      // Send logout request to server
-      fetch('/api/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => {
-        // Redirect regardless of server response
-        setTimeout(() => {
-          window.location.href = '/login'; // atau '/' untuk halaman login
-        }, 1000);
-      })
-      .catch(error => {
-        console.error('Logout error:', error);
-        // Still redirect even if server request fails
-        setTimeout(() => {
-          window.location.href = '/login';
-        }, 1000);
-      });
+      // Simple redirect after short delay
+      setTimeout(() => {
+        // PILIH SALAH SATU dari opsi di bawah:
+        
+        // Opsi 1: Redirect ke halaman login
+        window.location.href = '/';
+        
+        // Opsi 2: Redirect ke home/index
+        // window.location.href = '/';
+        
+        // Opsi 3: Redirect ke halaman specific
+        // window.location.href = '/index.html';
+        
+        // Opsi 4: Reload current page (jika dashboard ini adalah halaman login)
+        // window.location.reload();
+        
+      }, 1000);
     }
+
+    // Handle keyboard shortcut for logout (Ctrl+L)
+    document.addEventListener('keydown', function(e) {
+      // ... kode keyboard shortcuts yang sudah ada ...
+      
+      // TAMBAHKAN INI setelah shortcut yang sudah ada, sebelum closing bracket
+      // Ctrl/Cmd + L for logout
+      if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+        e.preventDefault();
+        logout();
+      }
+    });
 
     // Handle keyboard shortcut for logout (Ctrl+L)
     document.addEventListener('keydown', function(e) {
