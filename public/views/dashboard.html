@@ -1602,34 +1602,7 @@ Terima kasih! 🙏</textarea>
       showNotification('🗑️ Logs cleared', 'info');
     }
 
-    function exportLogs() {
-      const logs = document.getElementById('logsContainer').innerText;
-      const blob = new Blob([logs], {
-        type: 'text/plain'
-      });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `smartlabo-logs-${new Date().toISOString().slice(0,10)}.txt`;
-      a.click();
-      window.URL.revokeObjectURL(url);
-      addLog('Logs exported successfully', 'SUCCESS');
-      showNotification('📁 Logs exported successfully', 'success');
-    }
-
-    // Notification System
-    function showNotification(message, type = 'info') {
-      // Create notification element
-      const notification = document.createElement('div');
-      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
-      notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; animation: slideInRight 0.5s ease;';
-      notification.innerHTML = `
-      ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
-
-    // Logout function
-    // Simple logout function (no API required)
+    
     function logout() {
       if (!confirm('Apakah Anda yakin ingin logout?')) {
         return;
@@ -1674,6 +1647,45 @@ Terima kasih! 🙏</textarea>
         logout();
       }
     });
+
+    // Handle keyboard shortcut for logout (Ctrl+L)
+    document.addEventListener('keydown', function(e) {
+      // ... kode keyboard shortcuts yang sudah ada ...
+      
+      // TAMBAHKAN INI setelah shortcut yang sudah ada
+      // Ctrl/Cmd + L for logout
+      if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+        e.preventDefault();
+        logout();
+      }
+    });
+
+    function exportLogs() {
+      const logs = document.getElementById('logsContainer').innerText;
+      const blob = new Blob([logs], {
+        type: 'text/plain'
+      });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `smartlabo-logs-${new Date().toISOString().slice(0,10)}.txt`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      addLog('Logs exported successfully', 'SUCCESS');
+      showNotification('📁 Logs exported successfully', 'success');
+    }
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+      notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; animation: slideInRight 0.5s ease;';
+      notification.innerHTML = `
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+
 
     // Handle keyboard shortcut for logout (Ctrl+L)
     document.addEventListener('keydown', function(e) {
